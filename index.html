@@ -23,6 +23,7 @@
       </a>
       <nav class="nav" aria-label="Main">
         <a href="#sounds">发音 <span>Sounds</span></a>
+        <a href="#vocab">词汇 <span>Words</span></a>
         <a href="#phrases">短语 <span>Phrases</span></a>
         <a href="#grammar">语法 <span>Grammar</span></a>
         <a href="#mistakes">纠错 <span>Fixes</span></a>
@@ -63,10 +64,11 @@
       <div class="wrap path">
         <ol class="path-list">
           <li><a href="#sounds"><b>01</b><span>发音</span><small>Sounds Chinese doesn't have</small></a></li>
-          <li><a href="#phrases"><b>02</b><span>常用短语</span><small>Everyday phrases</small></a></li>
-          <li><a href="#grammar"><b>03</b><span>语法差异</span><small>Grammar differences</small></a></li>
-          <li><a href="#mistakes"><b>04</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
-          <li><a href="#practice"><b>05</b><span>练习</span><small>Check yourself</small></a></li>
+          <li><a href="#vocab"><b>02</b><span>A1 词汇</span><small>Core beginner words</small></a></li>
+          <li><a href="#phrases"><b>03</b><span>常用短语</span><small>Everyday phrases</small></a></li>
+          <li><a href="#grammar"><b>04</b><span>语法差异</span><small>Grammar differences</small></a></li>
+          <li><a href="#mistakes"><b>05</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
+          <li><a href="#practice"><b>06</b><span>练习</span><small>Check yourself</small></a></li>
         </ol>
       </div>
     </section>
@@ -93,11 +95,65 @@
       </div>
     </section>
 
+    <!-- VOCAB -->
+    <section class="section section-vocab" id="vocab">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-num">02</p>
+          <div>
+            <h2>A1 核心词汇 <span class="h-en">CEFR A1 word list</span></h2>
+            <p class="section-intro">欧洲语言共同参考框架（CEFR）A1 级别是英语入门水平。这里收录 A–M 开头的 <b id="vocab-total">0</b> 个 A1 单词，每个都有中文意思、例句和发音。点击单词听读音，勾选“认识”记录你的进度。<br><span class="en-note">CEFR A1 is the first level of English. Tap a word to hear it and see an example; tick the words you know to track your progress.</span></p>
+          </div>
+        </header>
+
+        <div class="vocab-progress">
+          <div class="vp-text"><b id="vp-known">0</b> / <span id="vp-total">0</span> 已掌握 · known</div>
+          <div class="vp-bar"><span id="vp-bar"></span></div>
+        </div>
+
+        <div class="vocab-tools">
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.96 12.05l4.25 4.24-1.42 1.42-4.24-4.25A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
+            <input type="search" id="vocab-search" placeholder="搜索单词 · Search words" aria-label="Search words">
+          </label>
+          <select id="vocab-pos" aria-label="Part of speech"></select>
+          <label class="check"><input type="checkbox" id="vocab-unknown"> 只看未掌握 Hide known</label>
+        </div>
+        <div class="letters" id="vocab-letters" role="group" aria-label="Filter by letter"></div>
+
+        <p class="vocab-count" id="vocab-count" aria-live="polite"></p>
+        <div class="vocab-grid" id="vocab-grid"></div>
+        <div class="vocab-more"><button type="button" class="btn btn-ghost" id="vocab-more">显示更多 Show more</button></div>
+
+        <div class="drill" id="drill">
+          <div class="drill-head">
+            <div>
+              <p class="card-label">词汇小测 · Word drill</p>
+              <p class="drill-sub">选出正确的中文意思。答对的单词会自动标记为“认识”。<br><span class="en-note">Pick the right Chinese meaning. Words you get right are marked as known.</span></p>
+            </div>
+            <p class="drill-streak">连对 Streak <b id="drill-streak">0</b></p>
+          </div>
+          <div class="drill-body">
+            <div class="drill-word">
+              <p class="drill-en" id="drill-en">—</p>
+              <p class="drill-pos" id="drill-pos"></p>
+              <button type="button" class="speak mini" id="drill-speak" aria-label="Listen">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
+              </button>
+            </div>
+            <div class="drill-opts" id="drill-opts"></div>
+          </div>
+          <p class="drill-ex" id="drill-ex"></p>
+          <button type="button" class="btn btn-primary" id="drill-next">下一个 Next word</button>
+        </div>
+      </div>
+    </section>
+
     <!-- PHRASES -->
     <section class="section section-alt" id="phrases">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">02</p>
+          <p class="section-num">03</p>
           <div>
             <h2>常用短语卡片 <span class="h-en">Phrase cards</span></h2>
             <p class="section-intro">先看中文，想一想英文怎么说，再翻开卡片核对。<br><span class="en-note">Read the Chinese, say it in English, then flip the card to check.</span></p>
@@ -112,7 +168,7 @@
     <section class="section" id="grammar">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">03</p>
+          <p class="section-num">04</p>
           <div>
             <h2>中英语法差异 <span class="h-en">Where the grammar differs</span></h2>
             <p class="section-intro">中文靠语序和时间词表达意思，英语还要改变单词本身。了解这些差异，可以避免大部分错误。<br><span class="en-note">Chinese relies on word order and time words; English also changes the words themselves.</span></p>
@@ -126,7 +182,7 @@
     <section class="section section-ink" id="mistakes">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">04</p>
+          <p class="section-num">05</p>
           <div>
             <h2>常见中式英语 <span class="h-en">Common Chinglish, fixed</span></h2>
             <p class="section-intro">这些句子是直接从中文翻译过来的。看看地道的说法。<br><span class="en-note">Direct translations from Chinese — and what native speakers actually say.</span></p>
@@ -140,7 +196,7 @@
     <section class="section" id="practice">
       <div class="wrap narrow">
         <header class="section-head">
-          <p class="section-num">05</p>
+          <p class="section-num">06</p>
           <div>
             <h2>小测验 <span class="h-en">Quick quiz</span></h2>
             <p class="section-intro">选出正确的英语表达。每题都有解释。<br><span class="en-note">Pick the correct English. Every answer comes with an explanation.</span></p>
@@ -175,6 +231,7 @@
   </footer>
 
   <script src="assets/data.js"></script>
+  <script src="assets/vocab-a1.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

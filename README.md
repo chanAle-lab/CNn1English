@@ -5,10 +5,11 @@ A teaching and studying resource for Mandarin speakers to learn English! 为中�
 
 ## What's inside
 - **发音 Sounds** – minimal pairs for sounds Mandarin doesn't have (th, l/r, v/w, long/short vowels…), with tap-to-listen audio (US/UK accent, speed control)
+- **A1 词汇 Vocabulary** – 492 CEFR A1 words (A–M) with Chinese meanings, example sentences, audio, search/filters, progress tracking and a word drill
 - **短语 Phrases** – flip cards for greetings, daily life, restaurants, travel and work
 - **语法 Grammar** – the key differences between Chinese and English grammar
 - **纠错 Fixes** – common Chinglish sentences and the natural alternative
 - **练习 Practice** – a 10-question quiz with explanations
 
 ## Editing content
-All lessons live in `assets/data.js` — add words, phrases, grammar points or quiz questions there. No build step: it's plain HTML/CSS/JS served by GitHub Pages from the `main` branch.
+All lessons live in `assets/data.js`; the A1 word list is in `assets/vocab-a1.js` (format: word, part of speech, Chinese, example) — add words, phrases, grammar points or quiz questions there. No build step: it's plain HTML/CSS/JS served by GitHub Pages from the `main` branch.

@@ -209,4 +209,147 @@
     qi++; renderQ();
   });
   renderQ();
+
+  /* ---------- A1 vocabulary ---------- */
+  (function vocab() {
+    var V = (window.CN1_A1 || []).map(function (r, i) {
+      return { id: i, w: r[0], p: r[1], zh: r[2], ex: r[3], n: r[4] || "", key: r[0].replace(/^to /, "").replace(/^the /, "") };
+    });
+    if (!V.length) return;
+    var POS = { n: "名词 noun", v: "动词 verb", adj: "形容词 adj", adv: "副词 adv", prep: "介词 prep", num: "数词 number", det: "限定词 det", pron: "代词 pron", conj: "连词 conj", interj: "感叹词 interj" };
+    var STORE = "cn1-a1-known";
+    var known = {};
+    try { known = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
+    function save() { try { localStorage.setItem(STORE, JSON.stringify(known)); } catch (e) {} }
+
+    var state = { q: "", letter: "", pos: "", hideKnown: false, limit: 48 };
+    var grid = $("#vocab-grid"), count = $("#vocab-count"), more = $("#vocab-more");
+    $("#vocab-total").textContent = V.length;
+    $("#vp-total").textContent = V.length;
+
+    function updateProgress() {
+      var k = V.filter(function (x) { return known[x.w + "|" + x.p]; }).length;
+      $("#vp-known").textContent = k;
+      $("#vp-bar").style.width = (k / V.length * 100) + "%";
+    }
+    function isKnown(x) { return !!known[x.w + "|" + x.p]; }
+    function setKnown(x, v) { if (v) known[x.w + "|" + x.p] = 1; else delete known[x.w + "|" + x.p]; save(); updateProgress(); }
+
+    // POS select
+    var posSel = $("#vocab-pos");
+    var posKeys = {};
+    V.forEach(function (x) { x.p.split(" / ").forEach(function (k) { k = k.split(" ")[0]; if (POS[k]) posKeys[k] = 1; }); });
+    posSel.innerHTML = '<option value="">全部词性 All types</option>' + Object.keys(POS).filter(function (k) { return posKeys[k]; }).map(function (k) { return '<option value="' + k + '">' + POS[k] + "</option>"; }).join("");
+    posSel.addEventListener("change", function () { state.pos = posSel.value; state.limit = 48; render(); });
+
+    // Letters
+    var letters = $("#vocab-letters");
+    var L = [];
+    V.forEach(function (x) { var c = x.key[0].toUpperCase(); if (L.indexOf(c) < 0) L.push(c); });
+    ["", ].concat(L).forEach(function (c) {
+      var b = el("button", "letter", c || "全部 All");
+      b.type = "button";
+      b.setAttribute("aria-pressed", c === "" ? "true" : "false");
+      b.addEventListener("click", function () {
+        state.letter = c; state.limit = 48;
+        letters.querySelectorAll(".letter").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        render();
+      });
+      letters.appendChild(b);
+    });
+
+    var t;
+    $("#vocab-search").addEventListener("input", function (e) {
+      clearTimeout(t);
+      t = setTimeout(function () { state.q = e.target.value.trim().toLowerCase(); state.limit = 48; render(); }, 120);
+    });
+    $("#vocab-unknown").addEventListener("change", function (e) { state.hideKnown = e.target.checked; state.limit = 48; render(); });
+    more.addEventListener("click", function () { state.limit += 48; render(); });
+
+    function filtered() {
+      return V.filter(function (x) {
+        if (state.letter && x.key[0].toUpperCase() !== state.letter) return false;
+        if (state.pos && x.p.split(/[ \/]+/).indexOf(state.pos) < 0) return false;
+        if (state.hideKnown && isKnown(x)) return false;
+        if (state.q) return x.w.toLowerCase().indexOf(state.q) >= 0 || x.zh.indexOf(state.q) >= 0;
+        return true;
+      });
+    }
+    function render() {
+      var list = filtered();
+      grid.innerHTML = "";
+      if (!list.length) {
+        grid.innerHTML = '<p class="vocab-empty">没有找到单词。试试别的关键词？<br><span class="en-note">No words match. Try a different search or filter.</span></p>';
+      }
+      list.slice(0, state.limit).forEach(function (x) {
+        var c = el("article", "vw" + (isKnown(x) ? " is-known" : ""));
+        c.innerHTML =
+          '<div class="vw-top"><button type="button" class="vw-word" aria-label="Listen: ' + esc(x.w) + '">' + esc(x.w) + ICON + "</button>" +
+          '<span class="vw-pos" title="' + esc(x.p) + '">' + esc(x.p) + "</span></div>" +
+          '<p class="vw-zh">' + esc(x.zh) + (x.n ? ' <span class="vw-sense">(' + esc(x.n) + ")</span>" : "") + "</p>" +
+          '<p class="vw-ex">' + esc(x.ex) + "</p>" +
+          '<label class="vw-known"><input type="checkbox"' + (isKnown(x) ? " checked" : "") + "> 认识 I know this</label>";
+        c.querySelector(".vw-word").addEventListener("click", function () { speak(x.w.replace(/^to /, "") + ". " + x.ex); });
+        c.querySelector("input").addEventListener("change", function (e) {
+          setKnown(x, e.target.checked);
+          c.classList.toggle("is-known", e.target.checked);
+        });
+        grid.appendChild(c);
+      });
+      var shown = Math.min(list.length, state.limit);
+      count.textContent = "显示 " + shown + " / " + list.length + " 个单词 · Showing " + shown + " of " + list.length;
+      more.hidden = list.length <= state.limit;
+    }
+    updateProgress();
+    render();
+
+    // Drill
+    var cur, streak = 0, done = false;
+    var optsEl = $("#drill-opts");
+    function pick() {
+      var pool = V.filter(function (x) { return !isKnown(x); });
+      if (!pool.length) pool = V;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    function nextDrill() {
+      done = false;
+      cur = pick();
+      $("#drill-en").textContent = cur.w;
+      $("#drill-pos").textContent = cur.p + (cur.n ? " · " + cur.n : "");
+      $("#drill-ex").textContent = "";
+      var main = cur.p.split(" ")[0];
+      var same = V.filter(function (x) { return x !== cur && x.zh !== cur.zh && x.p.split(" ")[0] === main; });
+      if (same.length < 3) same = V.filter(function (x) { return x !== cur && x.zh !== cur.zh; });
+      var opts = [cur];
+      while (opts.length < 4) {
+        var o = same[Math.floor(Math.random() * same.length)];
+        if (opts.indexOf(o) < 0) opts.push(o);
+      }
+      opts.sort(function () { return Math.random() - 0.5; });
+      optsEl.innerHTML = "";
+      opts.forEach(function (o, i) {
+        var b = el("button", "opt", '<span class="opt-key">' + "ABCD"[i] + "</span>" + esc(o.zh));
+        b.type = "button";
+        b.addEventListener("click", function () {
+          if (done) return; done = true;
+          optsEl.querySelectorAll(".opt").forEach(function (x) { x.disabled = true; });
+          if (o === cur) {
+            b.classList.add("correct"); streak++;
+            setKnown(cur, true);
+            render();
+          } else {
+            b.classList.add("wrong"); streak = 0;
+            optsEl.querySelectorAll(".opt")[opts.indexOf(cur)].classList.add("correct");
+          }
+          $("#drill-streak").textContent = streak;
+          $("#drill-ex").textContent = "例句 Example: " + cur.ex;
+          speak(cur.w.replace(/^to /, ""));
+        });
+        optsEl.appendChild(b);
+      });
+    }
+    $("#drill-speak").addEventListener("click", function () { speak(cur.w.replace(/^to /, "")); });
+    $("#drill-next").addEventListener("click", nextDrill);
+    nextDrill();
+  })();
 })();
