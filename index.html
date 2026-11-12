@@ -64,7 +64,7 @@
       <div class="wrap path">
         <ol class="path-list">
           <li><a href="#sounds"><b>01</b><span>发音</span><small>Sounds Chinese doesn't have</small></a></li>
-          <li><a href="#vocab"><b>02</b><span>A1 词汇</span><small>Core beginner words</small></a></li>
+          <li><a href="#vocab"><b>02</b><span>核心词汇</span><small>A1 / A2 Vocabulary</small></a></li>
           <li><a href="#phrases"><b>03</b><span>常用短语</span><small>Everyday phrases</small></a></li>
           <li><a href="#grammar"><b>04</b><span>语法差异</span><small>Grammar differences</small></a></li>
           <li><a href="#mistakes"><b>05</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
@@ -101,10 +101,19 @@
         <header class="section-head">
           <p class="section-num">02</p>
           <div>
-            <h2>A1 核心词汇 <span class="h-en">CEFR A1 word list</span></h2>
-            <p class="section-intro">欧洲语言共同参考框架（CEFR）A1 级别是英语入门水平。这里收录 A–M 开头的 <b id="vocab-total">0</b> 个 A1 单词，每个都有中文意思、例句和发音。点击单词听读音，勾选“认识”记录你的进度。<br><span class="en-note">CEFR A1 is the first level of English. Tap a word to hear it and see an example; tick the words you know to track your progress.</span></p>
+            <h2>核心词汇 <span class="h-en">Vocabulary (A1 / A2)</span></h2>
+            <p class="section-intro">欧洲语言共同参考框架（CEFR）等级词汇库。当前级别共收录 <b id="vocab-total">0</b> 个单词，包含中文释义、例句与标准发音。点击单词听读音，勾选“认识”记录进度。<br><span class="en-note">CEFR A1 and A2 vocabulary lists with Chinese definitions, examples, audio, and progress tracking.</span></p>
           </div>
         </header>
+
+        <div class="level-tabs" role="tablist" aria-label="Vocabulary level">
+          <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-level="a1">
+            A1 入门核心 <span class="count-badge" id="tab-count-a1">492</span>
+          </button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-level="a2">
+            A2 初级进阶 <span class="count-badge" id="tab-count-a2">862</span>
+          </button>
+        </div>
 
         <div class="vocab-progress">
           <div class="vp-text"><b id="vp-known">0</b> / <span id="vp-total">0</span> 已掌握 · known</div>
@@ -232,6 +241,7 @@
 
   <script src="assets/data.js"></script>
   <script src="assets/vocab-a1.js"></script>
+  <script src="assets/vocab-a2.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

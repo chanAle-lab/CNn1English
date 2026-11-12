@@ -210,52 +210,122 @@
   });
   renderQ();
 
-  /* ---------- A1 vocabulary ---------- */
+  /* ---------- Vocabulary (A1 & A2) ---------- */
   (function vocab() {
-    var V = (window.CN1_A1 || []).map(function (r, i) {
-      return { id: i, w: r[0], p: r[1], zh: r[2], ex: r[3], n: r[4] || "", key: r[0].replace(/^to /, "").replace(/^the /, "") };
-    });
-    if (!V.length) return;
+    var rawA1 = window.CN1_A1 || [];
+    var rawA2 = window.CN1_A2 || [];
+    if (!rawA1.length && !rawA2.length) return;
+
+    var countA1El = $("#tab-count-a1");
+    var countA2El = $("#tab-count-a2");
+    if (countA1El) countA1El.textContent = rawA1.length;
+    if (countA2El) countA2El.textContent = rawA2.length;
+
+    var level = "a1";
+    function getRaw(lvl) { return lvl === "a2" ? rawA2 : rawA1; }
+    function mapList(lvl) {
+      return getRaw(lvl).map(function (r, i) {
+        return {
+          id: lvl + "-" + i,
+          lvl: lvl,
+          w: r[0],
+          p: r[1],
+          zh: r[2],
+          ex: r[3],
+          n: r[4] || "",
+          key: r[0].replace(/^to /, "").replace(/^the /, "")
+        };
+      });
+    }
+
+    var V = mapList(level);
     var POS = { n: "名词 noun", v: "动词 verb", adj: "形容词 adj", adv: "副词 adv", prep: "介词 prep", num: "数词 number", det: "限定词 det", pron: "代词 pron", conj: "连词 conj", interj: "感叹词 interj" };
-    var STORE = "cn1-a1-known";
+
+    function storeKey(lvl) { return "cn1-" + lvl + "-known"; }
     var known = {};
-    try { known = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
-    function save() { try { localStorage.setItem(STORE, JSON.stringify(known)); } catch (e) {} }
+    function loadKnown(lvl) {
+      try { known = JSON.parse(localStorage.getItem(storeKey(lvl)) || "{}"); } catch (e) { known = {}; }
+    }
+    loadKnown(level);
+    function saveKnown() { try { localStorage.setItem(storeKey(level), JSON.stringify(known)); } catch (e) {} }
 
     var state = { q: "", letter: "", pos: "", hideKnown: false, limit: 48 };
     var grid = $("#vocab-grid"), count = $("#vocab-count"), more = $("#vocab-more");
-    $("#vocab-total").textContent = V.length;
-    $("#vp-total").textContent = V.length;
+    var posSel = $("#vocab-pos");
+    var lettersEl = $("#vocab-letters");
 
     function updateProgress() {
       var k = V.filter(function (x) { return known[x.w + "|" + x.p]; }).length;
+      $("#vocab-total").textContent = V.length;
+      $("#vp-total").textContent = V.length;
       $("#vp-known").textContent = k;
-      $("#vp-bar").style.width = (k / V.length * 100) + "%";
+      $("#vp-bar").style.width = (V.length ? (k / V.length * 100) : 0) + "%";
     }
     function isKnown(x) { return !!known[x.w + "|" + x.p]; }
-    function setKnown(x, v) { if (v) known[x.w + "|" + x.p] = 1; else delete known[x.w + "|" + x.p]; save(); updateProgress(); }
+    function setKnown(x, v) {
+      if (v) known[x.w + "|" + x.p] = 1;
+      else delete known[x.w + "|" + x.p];
+      saveKnown();
+      updateProgress();
+    }
 
-    // POS select
-    var posSel = $("#vocab-pos");
-    var posKeys = {};
-    V.forEach(function (x) { x.p.split(" / ").forEach(function (k) { k = k.split(" ")[0]; if (POS[k]) posKeys[k] = 1; }); });
-    posSel.innerHTML = '<option value="">全部词性 All types</option>' + Object.keys(POS).filter(function (k) { return posKeys[k]; }).map(function (k) { return '<option value="' + k + '">' + POS[k] + "</option>"; }).join("");
+    function buildPosFilter() {
+      var posKeys = {};
+      V.forEach(function (x) {
+        x.p.split(" / ").forEach(function (k) {
+          k = k.split(" ")[0];
+          if (POS[k]) posKeys[k] = 1;
+        });
+      });
+      posSel.innerHTML = '<option value="">全部词性 All types</option>' + Object.keys(POS).filter(function (k) { return posKeys[k]; }).map(function (k) { return '<option value="' + k + '">' + POS[k] + "</option>"; }).join("");
+      posSel.value = state.pos || "";
+    }
     posSel.addEventListener("change", function () { state.pos = posSel.value; state.limit = 48; render(); });
 
-    // Letters
-    var letters = $("#vocab-letters");
-    var L = [];
-    V.forEach(function (x) { var c = x.key[0].toUpperCase(); if (L.indexOf(c) < 0) L.push(c); });
-    ["", ].concat(L).forEach(function (c) {
-      var b = el("button", "letter", c || "全部 All");
-      b.type = "button";
-      b.setAttribute("aria-pressed", c === "" ? "true" : "false");
-      b.addEventListener("click", function () {
-        state.letter = c; state.limit = 48;
-        letters.querySelectorAll(".letter").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        render();
+    function buildLetters() {
+      lettersEl.innerHTML = "";
+      var L = [];
+      V.forEach(function (x) { var c = x.key[0].toUpperCase(); if (L.indexOf(c) < 0) L.push(c); });
+      L.sort();
+      [""].concat(L).forEach(function (c) {
+        var b = el("button", "letter", c || "全部 All");
+        b.type = "button";
+        b.setAttribute("aria-pressed", c === state.letter ? "true" : "false");
+        b.addEventListener("click", function () {
+          state.letter = c; state.limit = 48;
+          lettersEl.querySelectorAll(".letter").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+          render();
+        });
+        lettersEl.appendChild(b);
       });
-      letters.appendChild(b);
+    }
+
+    // Level tabs
+    document.querySelectorAll(".level-tabs [data-level]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var newLevel = b.dataset.level;
+        if (newLevel === level) return;
+        level = newLevel;
+        loadKnown(level);
+        V = mapList(level);
+        state.letter = "";
+        state.pos = "";
+        state.q = "";
+        state.hideKnown = false;
+        state.limit = 48;
+        if ($("#vocab-search")) $("#vocab-search").value = "";
+        if ($("#vocab-unknown")) $("#vocab-unknown").checked = false;
+        document.querySelectorAll(".level-tabs [data-level]").forEach(function (x) {
+          var sel = x.dataset.level === level;
+          x.classList.toggle("active", sel);
+          x.setAttribute("aria-selected", sel ? "true" : "false");
+        });
+        buildPosFilter();
+        buildLetters();
+        updateProgress();
+        render();
+        nextDrill();
+      });
     });
 
     var t;
@@ -300,6 +370,9 @@
       count.textContent = "显示 " + shown + " / " + list.length + " 个单词 · Showing " + shown + " of " + list.length;
       more.hidden = list.length <= state.limit;
     }
+
+    buildPosFilter();
+    buildLetters();
     updateProgress();
     render();
 
@@ -314,6 +387,7 @@
     function nextDrill() {
       done = false;
       cur = pick();
+      if (!cur) return;
       $("#drill-en").textContent = cur.w;
       $("#drill-pos").textContent = cur.p + (cur.n ? " · " + cur.n : "");
       $("#drill-ex").textContent = "";
@@ -321,9 +395,10 @@
       var same = V.filter(function (x) { return x !== cur && x.zh !== cur.zh && x.p.split(" ")[0] === main; });
       if (same.length < 3) same = V.filter(function (x) { return x !== cur && x.zh !== cur.zh; });
       var opts = [cur];
-      while (opts.length < 4) {
+      while (opts.length < 4 && opts.length < V.length) {
         var o = same[Math.floor(Math.random() * same.length)];
-        if (opts.indexOf(o) < 0) opts.push(o);
+        if (o && opts.indexOf(o) < 0) opts.push(o);
+        else break;
       }
       opts.sort(function () { return Math.random() - 0.5; });
       optsEl.innerHTML = "";
@@ -339,7 +414,8 @@
             render();
           } else {
             b.classList.add("wrong"); streak = 0;
-            optsEl.querySelectorAll(".opt")[opts.indexOf(cur)].classList.add("correct");
+            var cBtn = optsEl.querySelectorAll(".opt")[opts.indexOf(cur)];
+            if (cBtn) cBtn.classList.add("correct");
           }
           $("#drill-streak").textContent = streak;
           $("#drill-ex").textContent = "例句 Example: " + cur.ex;
@@ -348,7 +424,7 @@
         optsEl.appendChild(b);
       });
     }
-    $("#drill-speak").addEventListener("click", function () { speak(cur.w.replace(/^to /, "")); });
+    $("#drill-speak").addEventListener("click", function () { if (cur) speak(cur.w.replace(/^to /, "")); });
     $("#drill-next").addEventListener("click", nextDrill);
     nextDrill();
   })();
