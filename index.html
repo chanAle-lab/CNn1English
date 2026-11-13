@@ -3,81 +3,77 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CNn1English · 中文母语者的英语学习站</title>
-  <meta name="description" content="A teaching and studying resource for Mandarin speakers to learn English — pronunciation, phrases, grammar and practice. 为中文母语者设计的英语学习资源。">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b8322a'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23fff' font-family='serif'%3E英%3C/text%3E%3C/svg%3E">
+  <title>CNn1English · 从中文到英文，一步一步</title>
+  <meta name="description" content="A teaching and studying resource for Mandarin speakers to learn English — pronunciation, vocabulary, dialogues, reading, listening, grammar and practice. 为中文母语者设计的英语学习资源。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b8432f'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='serif'%3E英%3C/text%3E%3C/svg%3E">
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content · 跳到正文</a>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="#top" aria-label="CNn1English home">
-        <span class="seal" aria-hidden="true">英</span>
-        <span class="brand-name">CNn1English</span>
-      </a>
-      <nav class="nav" aria-label="Main">
-        <a href="#sounds">发音 <span>Sounds</span></a>
-        <a href="#vocab">词汇 <span>Words</span></a>
-        <a href="#dialogues">对话 <span>Dialogues</span></a>
-        <a href="#reading">阅读 <span>Reading</span></a>
-        <a href="#listening">听力 <span>Listening</span></a>
-        <a href="#phrases">短语 <span>Phrases</span></a>
-        <a href="#grammar">语法 <span>Grammar</span></a>
-        <a href="#mistakes">纠错 <span>Fixes</span></a>
-        <a href="#practice">练习 <span>Practice</span></a>
-      </nav>
-    </div>
+  <header class="site-header no-print">
+    <a class="brand" href="#top" aria-label="CNn1English home">
+      <span class="seal" aria-hidden="true">英</span>
+      <span>CNn1English</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#sounds">发音</a>
+      <a href="#vocab">词汇</a>
+      <a href="#dialogues">对话</a>
+      <a href="#reading">阅读</a>
+      <a href="#listening">听力</a>
+      <a href="#phrases">短语</a>
+      <a href="#grammar">语法</a>
+      <a href="#mistakes">纠错</a>
+      <a href="#practice">练习</a>
+    </nav>
   </header>
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">For Mandarin speakers · 专为中文母语者</p>
-          <h1 class="hero-title">
-            <span class="zh">从中文到英文，</span>
-            <span class="zh">一步一步。</span>
-          </h1>
-          <p class="hero-en">From Chinese to English, one clear step at a time.</p>
-          <p class="hero-lede">我们从中文的角度讲解英语：哪些音中文里没有，哪些语法规则和中文不同，哪些“中式英语”最常见。每个例子都可以点击朗读。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#sounds">开始学习 Start learning</a>
-            <a class="btn btn-ghost" href="#practice">做个小测验 Take the quiz</a>
-          </div>
+    <section class="hero home-hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">For Mandarin speakers · 专为中文母语者</p>
+        <h1>From Chinese to English,<br>one clear step at a time.</h1>
+        <p class="hero-zh zh">从中文到英文，一步一步。</p>
+        <p class="lede">我们从中文的角度讲解英语：哪些音中文里没有，哪些语法规则和中文不同，哪些“中式英语”最常见。每个例子都可以点击朗读。</p>
+        <div class="hero-actions">
+          <a class="btn" href="#sounds">开始学习 Start learning</a>
+          <a class="btn ghost small" href="#practice">做个小测验 Take the quiz</a>
         </div>
-        <aside class="hero-card" aria-label="Word of the day">
-          <p class="card-label">今日单词 · Word of the day</p>
-          <p class="wotd-word" id="wotd-word">—</p>
-          <p class="wotd-ipa" id="wotd-ipa"></p>
-          <p class="wotd-zh" id="wotd-zh"></p>
-          <p class="wotd-ex" id="wotd-ex"></p>
-          <button class="speak" type="button" id="wotd-speak" aria-label="Listen to the word of the day">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
-            听 Listen
+      </div>
+      <aside class="wotd" aria-label="Word of the day">
+        <p class="eyebrow">Word of the day · 今日单词</p>
+        <div class="wotd-main">
+          <button class="wotd-word" id="wotd-word" type="button" title="Listen">
+            —
           </button>
-        </aside>
-      </div>
-      <div class="wrap path">
-        <ol class="path-list">
-          <li><a href="#sounds"><b>01</b><span>发音难点</span><small>Sounds Chinese lacks</small></a></li>
-          <li><a href="#vocab"><b>02</b><span>核心词汇</span><small>A1 / A2 Vocabulary</small></a></li>
-          <li><a href="#dialogues"><b>03</b><span>情景对话</span><small>Real-life dialogues</small></a></li>
-          <li><a href="#reading"><b>04</b><span>分级阅读</span><small>Graded passages</small></a></li>
-          <li><a href="#listening"><b>05</b><span>听力训练</span><small>Listening drills</small></a></li>
-          <li><a href="#phrases"><b>06</b><span>常用短语</span><small>Everyday phrases</small></a></li>
-          <li><a href="#grammar"><b>07</b><span>语法差异</span><small>Grammar differences</small></a></li>
-          <li><a href="#mistakes"><b>08</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
-          <li><a href="#practice"><b>09</b><span>测验练习</span><small>Check yourself</small></a></li>
-        </ol>
-      </div>
+          <span class="wotd-ipa mono" id="wotd-ipa"></span>
+        </div>
+        <p class="wotd-zh zh" id="wotd-zh"></p>
+        <p class="wotd-ex" id="wotd-ex"></p>
+        <div class="wotd-meta">
+          <button class="btn small" type="button" id="wotd-speak">听发音 Listen</button>
+        </div>
+      </aside>
     </section>
+
+    <!-- LEARNING PATH -->
+    <div class="path" role="navigation" aria-label="Learning path">
+      <a href="#sounds"><span class="mono">01</span> 发音 Sounds</a>
+      <a href="#vocab"><span class="mono">02</span> 词汇 Words</a>
+      <a href="#dialogues"><span class="mono">03</span> 对话 Dialogues</a>
+      <a href="#reading"><span class="mono">04</span> 阅读 Reading</a>
+      <a href="#listening"><span class="mono">05</span> 听力 Listening</a>
+      <a href="#phrases"><span class="mono">06</span> 短语 Phrases</a>
+      <a href="#grammar"><span class="mono">07</span> 语法 Grammar</a>
+      <a href="#mistakes"><span class="mono">08</span> 纠错 Fixes</a>
+      <a href="#practice"><span class="mono">09</span> 练习 Practice</a>
+    </div>
 
     <!-- SOUNDS -->
     <section class="section" id="sounds">
@@ -372,17 +368,8 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div>
-        <p class="brand"><span class="seal" aria-hidden="true">英</span><span class="brand-name">CNn1English</span></p>
-        <p class="foot-note">一个为中文母语者设计的免费英语学习资源。<br>A free teaching and studying resource for Mandarin speakers learning English.</p>
-      </div>
-      <p class="foot-links">
-        <a href="https://github.com/chanAle-lab/CNn1English.github.io-">GitHub</a>
-        <a href="#top">回到顶部 Back to top ↑</a>
-      </p>
-    </div>
+  <footer class="site-footer no-print">
+    <p>CNn1English — 为中文母语者设计的免费英语学习资源 · A free teaching and studying resource for Mandarin speakers learning English. Free to study and share.</p>
   </footer>
 
   <script src="assets/data.js"></script>
