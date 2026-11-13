@@ -67,31 +67,11 @@
   /* ---------- Word of the day ---------- */
   var day = Math.floor(Date.now() / 86400000);
   var w = D.words[day % D.words.length];
-  var wotdBtn = $("#wotd-word");
-  var wotdSpeak = $("#wotd-speak");
-  if (wotdBtn) {
-    wotdBtn.textContent = w.w;
-    wotdBtn.addEventListener("click", function () { speak(w.w + ". " + w.ex); });
-  }
-  if ($("#wotd-ipa")) $("#wotd-ipa").textContent = w.ipa;
-  if ($("#wotd-zh")) $("#wotd-zh").textContent = w.zh;
-  if ($("#wotd-ex")) $("#wotd-ex").textContent = "“" + w.ex + "”";
-  if (wotdSpeak) wotdSpeak.addEventListener("click", function () { speak(w.w + ". " + w.ex); });
-
-  // Active navigation tracking on scroll
-  var navLinks = document.querySelectorAll(".site-header nav a");
-  var allSections = document.querySelectorAll("section[id]");
-  window.addEventListener("scroll", function () {
-    var scrollPos = window.scrollY + 120;
-    allSections.forEach(function (sec) {
-      if (sec.offsetTop <= scrollPos && sec.offsetTop + sec.offsetHeight > scrollPos) {
-        var id = sec.getAttribute("id");
-        navLinks.forEach(function (a) {
-          a.classList.toggle("active", a.getAttribute("href") === "#" + id);
-        });
-      }
-    });
-  }, { passive: true });
+  $("#wotd-word").textContent = w.w;
+  $("#wotd-ipa").textContent = w.ipa;
+  $("#wotd-zh").textContent = w.zh;
+  $("#wotd-ex").textContent = "“" + w.ex + "”";
+  $("#wotd-speak").addEventListener("click", function () { speak(w.w + ". " + w.ex); });
 
   /* ---------- Sounds ---------- */
   var grid = $("#sound-grid");
