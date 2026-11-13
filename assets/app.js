@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   var D = window.CN1;
+  var L = window.CN1_LESSONS || {};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var el = function (tag, cls, html) {
     var n = document.createElement(tag);
@@ -24,17 +25,23 @@
     return voices.find(function (v) { return v.lang === lang; }) ||
            voices.find(function (v) { return v.lang && v.lang.indexOf("en") === 0; }) || null;
   }
-  function speak(text) {
+  function speak(text, onEnd, customRate) {
     if (!("speechSynthesis" in window)) {
       showToast("你的浏览器不支持朗读 · Speech isn't supported in this browser");
+      if (onEnd) onEnd();
       return;
     }
     speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(text.replace(/\(.*?\)/g, "").split(" / ")[0]);
+    var clean = text.replace(/\(.*?\)/g, "").split(" / ")[0];
+    var u = new SpeechSynthesisUtterance(clean);
     u.lang = lang;
-    u.rate = parseFloat(rateInput ? rateInput.value : 0.9);
+    u.rate = customRate != null ? customRate : parseFloat(rateInput ? rateInput.value : 0.9);
     var v = pickVoice();
     if (v) u.voice = v;
+    if (onEnd) {
+      u.onend = onEnd;
+      u.onerror = onEnd;
+    }
     speechSynthesis.speak(u);
   }
   if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = function () {};
@@ -427,5 +434,382 @@
     $("#drill-speak").addEventListener("click", function () { if (cur) speak(cur.w.replace(/^to /, "")); });
     $("#drill-next").addEventListener("click", nextDrill);
     nextDrill();
+  })();
+
+  /* ---------- Dialogues Module ---------- */
+  (function dialoguesModule() {
+    var list = (L.dialogues || []);
+    if (!list.length) return;
+    var currentIdx = 0;
+    var tabsEl = $("#dialogue-tabs");
+    var titleEl = $("#dialogue-title");
+    var badgeEl = $("#dialogue-badge");
+    var descEl = $("#dialogue-desc");
+    var flowEl = $("#dialogue-flow");
+    var notesGrid = $("#dialogue-notes-grid");
+    var toggleZh = $("#dialogue-toggle-zh");
+    var playAllBtn = $("#dialogue-play-all");
+    var isPlayingAll = false;
+    var playTimeout = null;
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+      list.forEach(function (d, i) {
+        var b = el("button", "dialogue-tab" + (i === currentIdx ? " active" : ""));
+        b.type = "button";
+        b.textContent = d.title;
+        b.addEventListener("click", function () {
+          if (isPlayingAll) stopPlayAll();
+          currentIdx = i;
+          renderTabs();
+          renderDialogue();
+        });
+        tabsEl.appendChild(b);
+      });
+    }
+
+    function renderDialogue() {
+      var d = list[currentIdx];
+      if (!d) return;
+      titleEl.textContent = d.title + " · " + d.titleEn;
+      badgeEl.textContent = d.badge;
+      descEl.textContent = d.desc;
+
+      flowEl.innerHTML = "";
+      d.lines.forEach(function (line, idx) {
+        var bubble = el("div", "d-bubble role-" + line.role);
+        bubble.dataset.idx = idx;
+        var rInfo = d.roles[line.role] || { name: line.role };
+        bubble.innerHTML =
+          '<span class="d-bubble-role">' + esc(rInfo.name) + '</span>' +
+          '<div class="d-bubble-content">' +
+            '<p class="d-bubble-en">' + esc(line.en) + '</p>' +
+            '<p class="d-bubble-zh' + (toggleZh && !toggleZh.checked ? ' hidden' : '') + '">' + esc(line.zh) + '</p>' +
+          '</div>' +
+          '<button type="button" class="d-bubble-btn" aria-label="Listen: ' + esc(line.en) + '">' + ICON + '</button>';
+
+        bubble.querySelector(".d-bubble-btn").addEventListener("click", function (e) {
+          e.stopPropagation();
+          highlightAndSpeak(bubble, line.en);
+        });
+        bubble.addEventListener("click", function () {
+          highlightAndSpeak(bubble, line.en);
+        });
+        flowEl.appendChild(bubble);
+      });
+
+      // Notes
+      notesGrid.innerHTML = "";
+      (d.notes || []).forEach(function (n) {
+        var c = el("div", "note-card");
+        c.innerHTML = '<p class="note-term">' + esc(n.term) + '</p><p class="note-zh">' + esc(n.zh) + '</p>';
+        notesGrid.appendChild(c);
+      });
+    }
+
+    function highlightAndSpeak(bubble, text, onEnd) {
+      document.querySelectorAll(".d-bubble").forEach(function (b) { b.classList.remove("active-speaking"); });
+      bubble.classList.add("active-speaking");
+      speak(text, function () {
+        bubble.classList.remove("active-speaking");
+        if (onEnd) onEnd();
+      });
+    }
+
+    function stopPlayAll() {
+      isPlayingAll = false;
+      if (speechSynthesis) speechSynthesis.cancel();
+      clearTimeout(playTimeout);
+      if (playAllBtn) playAllBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> 连续朗读 Play All';
+      document.querySelectorAll(".d-bubble").forEach(function (b) { b.classList.remove("active-speaking"); });
+    }
+
+    function startPlayAll() {
+      isPlayingAll = true;
+      if (playAllBtn) playAllBtn.innerHTML = '⏹ 停止播放 Stop';
+      var d = list[currentIdx];
+      var bubbles = flowEl.querySelectorAll(".d-bubble");
+      var i = 0;
+      function next() {
+        if (!isPlayingAll || i >= d.lines.length) {
+          stopPlayAll();
+          return;
+        }
+        var line = d.lines[i];
+        var bubble = bubbles[i];
+        i++;
+        highlightAndSpeak(bubble, line.en, function () {
+          if (!isPlayingAll) return;
+          playTimeout = setTimeout(next, 700);
+        });
+      }
+      next();
+    }
+
+    if (playAllBtn) {
+      playAllBtn.addEventListener("click", function () {
+        if (isPlayingAll) stopPlayAll();
+        else startPlayAll();
+      });
+    }
+
+    if (toggleZh) {
+      toggleZh.addEventListener("change", function () {
+        flowEl.querySelectorAll(".d-bubble-zh").forEach(function (z) {
+          z.classList.toggle("hidden", !toggleZh.checked);
+        });
+      });
+    }
+
+    renderTabs();
+    renderDialogue();
+  })();
+
+  /* ---------- Reading Comprehension Module ---------- */
+  (function readingModule() {
+    var passages = (L.readings || []);
+    if (!passages.length) return;
+    var currentIdx = 0;
+    var tabsEl = $("#reading-tabs");
+    var titleEl = $("#passage-title");
+    var titleZhEl = $("#passage-title-zh");
+    var tagsEl = $("#passage-tags");
+    var bodyEl = $("#passage-body");
+    var vocabGrid = $("#passage-vocab-grid");
+    var quizList = $("#passage-quiz-list");
+    var toggleZh = $("#passage-toggle-zh");
+    var readAllBtn = $("#passage-read-all");
+    var isReadingAll = false;
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+      passages.forEach(function (p, i) {
+        var b = el("button", "reading-tab" + (i === currentIdx ? " active" : ""));
+        b.type = "button";
+        b.textContent = p.titleZh + " (" + p.level + ")";
+        b.addEventListener("click", function () {
+          if (isReadingAll) stopReadAll();
+          currentIdx = i;
+          renderTabs();
+          renderPassage();
+        });
+        tabsEl.appendChild(b);
+      });
+    }
+
+    function renderPassage() {
+      var p = passages[currentIdx];
+      if (!p) return;
+      titleEl.textContent = p.title;
+      titleZhEl.textContent = p.titleZh;
+
+      tagsEl.innerHTML =
+        '<span class="p-tag">' + esc(p.level) + '</span>' +
+        '<span class="p-tag">' + esc(p.time) + '</span>' +
+        (p.tags || []).map(function (t) { return '<span class="p-tag">' + esc(t) + '</span>'; }).join("");
+
+      bodyEl.innerHTML = "";
+      p.paragraphs.forEach(function (para, idx) {
+        var div = el("div", "passage-para");
+        div.dataset.idx = idx;
+        div.innerHTML =
+          '<p class="para-en">' + esc(para.en) + '</p>' +
+          '<p class="para-zh' + (toggleZh && !toggleZh.checked ? ' hidden' : '') + '">' + esc(para.zh) + '</p>' +
+          '<span class="para-speak-hint">' + ICON + '点击朗读本段 Tap to listen</span>';
+        div.addEventListener("click", function () {
+          highlightParaAndSpeak(div, para.en);
+        });
+        bodyEl.appendChild(div);
+      });
+
+      // Vocab
+      vocabGrid.innerHTML = "";
+      (p.vocab || []).forEach(function (v) {
+        var card = el("div", "pv-item");
+        card.innerHTML =
+          '<div class="pv-w"><span>' + esc(v.w) + '</span><button type="button" aria-label="Listen">' + ICON + '</button></div>' +
+          '<span class="pv-pos">' + esc(v.p) + '</span>' +
+          '<span class="pv-zh">' + esc(v.zh) + '</span>';
+        card.querySelector("button").addEventListener("click", function (e) {
+          e.stopPropagation();
+          speak(v.w);
+        });
+        vocabGrid.appendChild(card);
+      });
+
+      // Quiz
+      quizList.innerHTML = "";
+      (p.questions || []).forEach(function (q, qIdx) {
+        var qCard = el("div", "pq-card");
+        qCard.innerHTML =
+          '<p class="pq-q">' + (qIdx + 1) + '. ' + esc(q.q) + '</p>' +
+          '<div class="pq-options"></div>' +
+          '<p class="pq-explain" hidden></p>';
+        var optContainer = qCard.querySelector(".pq-options");
+        var explainEl = qCard.querySelector(".pq-explain");
+
+        q.options.forEach(function (optText, optIdx) {
+          var btn = el("button", "pq-opt");
+          btn.type = "button";
+          btn.innerHTML = '<span class="opt-key">' + "ABC"[optIdx] + '</span> ' + esc(optText);
+          btn.addEventListener("click", function () {
+            optContainer.querySelectorAll(".pq-opt").forEach(function (b) { b.disabled = true; });
+            if (optIdx === q.answer) {
+              btn.classList.add("correct");
+              explainEl.innerHTML = "<b>✓ 正确 Correct!</b> " + esc(q.explain);
+            } else {
+              btn.classList.add("wrong");
+              optContainer.querySelectorAll(".pq-opt")[q.answer].classList.add("correct");
+              explainEl.innerHTML = "<b>✗ 解析 Note:</b> " + esc(q.explain);
+            }
+            explainEl.hidden = false;
+          });
+          optContainer.appendChild(btn);
+        });
+        quizList.appendChild(qCard);
+      });
+    }
+
+    function highlightParaAndSpeak(div, text, onEnd) {
+      document.querySelectorAll(".passage-para").forEach(function (p) { p.classList.remove("speaking"); });
+      div.classList.add("speaking");
+      speak(text, function () {
+        div.classList.remove("speaking");
+        if (onEnd) onEnd();
+      });
+    }
+
+    function stopReadAll() {
+      isReadingAll = false;
+      if (speechSynthesis) speechSynthesis.cancel();
+      if (readAllBtn) readAllBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg> 朗读全篇 Listen';
+      document.querySelectorAll(".passage-para").forEach(function (p) { p.classList.remove("speaking"); });
+    }
+
+    function startReadAll() {
+      isReadingAll = true;
+      if (readAllBtn) readAllBtn.innerHTML = '⏹ 停止播放 Stop';
+      var p = passages[currentIdx];
+      var paras = bodyEl.querySelectorAll(".passage-para");
+      var i = 0;
+      function next() {
+        if (!isReadingAll || i >= p.paragraphs.length) {
+          stopReadAll();
+          return;
+        }
+        var para = p.paragraphs[i];
+        var div = paras[i];
+        i++;
+        highlightParaAndSpeak(div, para.en, function () {
+          if (!isReadingAll) return;
+          setTimeout(next, 600);
+        });
+      }
+      next();
+    }
+
+    if (readAllBtn) {
+      readAllBtn.addEventListener("click", function () {
+        if (isReadingAll) stopReadAll();
+        else startReadAll();
+      });
+    }
+
+    if (toggleZh) {
+      toggleZh.addEventListener("change", function () {
+        bodyEl.querySelectorAll(".para-zh").forEach(function (z) {
+          z.classList.toggle("hidden", !toggleZh.checked);
+        });
+      });
+    }
+
+    renderTabs();
+    renderPassage();
+  })();
+
+  /* ---------- Listening Drills Module ---------- */
+  (function listeningModule() {
+    var drills = (L.listening || []);
+    if (!drills.length) return;
+    var currentIdx = 0;
+    var navEl = $("#listening-nav");
+    var categoryEl = $("#lc-category");
+    var counterEl = $("#lc-counter");
+    var titleEl = $("#lc-title");
+    var promptEl = $("#lc-prompt");
+    var questionEl = $("#lc-question");
+    var playBtn = $("#lc-play-btn");
+    var slowBtn = $("#lc-slow-btn");
+    var optionsEl = $("#lc-options");
+    var feedbackEl = $("#lc-feedback");
+    var transcriptEl = $("#lc-transcript");
+    var tipEl = $("#lc-tip");
+    var nextBtn = $("#lc-next-btn");
+
+    function renderNav() {
+      navEl.innerHTML = "";
+      drills.forEach(function (d, i) {
+        var b = el("button", "ln-btn" + (i === currentIdx ? " active" : ""));
+        b.type = "button";
+        b.textContent = (i + 1) + ". " + d.title;
+        b.addEventListener("click", function () {
+          currentIdx = i;
+          renderNav();
+          renderDrill();
+        });
+        navEl.appendChild(b);
+      });
+    }
+
+    function renderDrill() {
+      var d = drills[currentIdx];
+      if (!d) return;
+      categoryEl.textContent = d.category;
+      counterEl.textContent = (currentIdx + 1) + " / " + drills.length;
+      titleEl.textContent = d.title;
+      promptEl.textContent = d.prompt;
+      questionEl.textContent = d.question;
+      transcriptEl.textContent = d.transcript;
+      tipEl.innerHTML = esc(d.tip);
+      feedbackEl.hidden = true;
+
+      optionsEl.innerHTML = "";
+      d.options.forEach(function (optText, optIdx) {
+        var btn = el("button", "lc-opt");
+        btn.type = "button";
+        btn.innerHTML = '<span class="opt-key">' + "ABC"[optIdx] + '</span> ' + esc(optText);
+        btn.addEventListener("click", function () {
+          optionsEl.querySelectorAll(".lc-opt").forEach(function (b) { b.disabled = true; });
+          if (optIdx === d.answer) {
+            btn.classList.add("correct");
+          } else {
+            btn.classList.add("wrong");
+            optionsEl.querySelectorAll(".lc-opt")[d.answer].classList.add("correct");
+          }
+          feedbackEl.hidden = false;
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function playAudio(isSlow) {
+      var d = drills[currentIdx];
+      if (!d) return;
+      var rate = isSlow ? 0.75 : 0.95;
+      speak(d.audio, null, rate);
+    }
+
+    if (playBtn) playBtn.addEventListener("click", function () { playAudio(false); });
+    if (slowBtn) slowBtn.addEventListener("click", function () { playAudio(true); });
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        currentIdx = (currentIdx + 1) % drills.length;
+        renderNav();
+        renderDrill();
+      });
+    }
+
+    renderNav();
+    renderDrill();
   })();
 })();

@@ -24,6 +24,9 @@
       <nav class="nav" aria-label="Main">
         <a href="#sounds">发音 <span>Sounds</span></a>
         <a href="#vocab">词汇 <span>Words</span></a>
+        <a href="#dialogues">对话 <span>Dialogues</span></a>
+        <a href="#reading">阅读 <span>Reading</span></a>
+        <a href="#listening">听力 <span>Listening</span></a>
         <a href="#phrases">短语 <span>Phrases</span></a>
         <a href="#grammar">语法 <span>Grammar</span></a>
         <a href="#mistakes">纠错 <span>Fixes</span></a>
@@ -63,12 +66,15 @@
       </div>
       <div class="wrap path">
         <ol class="path-list">
-          <li><a href="#sounds"><b>01</b><span>发音</span><small>Sounds Chinese doesn't have</small></a></li>
+          <li><a href="#sounds"><b>01</b><span>发音难点</span><small>Sounds Chinese lacks</small></a></li>
           <li><a href="#vocab"><b>02</b><span>核心词汇</span><small>A1 / A2 Vocabulary</small></a></li>
-          <li><a href="#phrases"><b>03</b><span>常用短语</span><small>Everyday phrases</small></a></li>
-          <li><a href="#grammar"><b>04</b><span>语法差异</span><small>Grammar differences</small></a></li>
-          <li><a href="#mistakes"><b>05</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
-          <li><a href="#practice"><b>06</b><span>练习</span><small>Check yourself</small></a></li>
+          <li><a href="#dialogues"><b>03</b><span>情景对话</span><small>Real-life dialogues</small></a></li>
+          <li><a href="#reading"><b>04</b><span>分级阅读</span><small>Graded passages</small></a></li>
+          <li><a href="#listening"><b>05</b><span>听力训练</span><small>Listening drills</small></a></li>
+          <li><a href="#phrases"><b>06</b><span>常用短语</span><small>Everyday phrases</small></a></li>
+          <li><a href="#grammar"><b>07</b><span>语法差异</span><small>Grammar differences</small></a></li>
+          <li><a href="#mistakes"><b>08</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
+          <li><a href="#practice"><b>09</b><span>测验练习</span><small>Check yourself</small></a></li>
         </ol>
       </div>
     </section>
@@ -158,11 +164,151 @@
       </div>
     </section>
 
-    <!-- PHRASES -->
-    <section class="section section-alt" id="phrases">
+    <!-- DIALOGUES -->
+    <section class="section section-alt" id="dialogues">
       <div class="wrap">
         <header class="section-head">
           <p class="section-num">03</p>
+          <div>
+            <h2>情景实战对话 <span class="h-en">Interactive Dialogues</span></h2>
+            <p class="section-intro">沉浸在真实的海外日常场景中：点咖啡、机场登机、街头问路与聚会邀约。点击单句听发音，支持自动连读朗读与中英译文切换。<br><span class="en-note">Realistic conversation scenarios. Tap any sentence to listen, play the full dialogue, and toggle Chinese translations.</span></p>
+          </div>
+        </header>
+
+        <div class="dialogue-box">
+          <div class="dialogue-tabs" id="dialogue-tabs" role="tablist" aria-label="Dialogue scenarios"></div>
+
+          <div class="dialogue-toolbar">
+            <div class="dialogue-meta">
+              <span class="badge" id="dialogue-badge">日常 Daily</span>
+              <h3 id="dialogue-title" class="dialogue-active-title">—</h3>
+            </div>
+            <div class="dialogue-actions">
+              <button type="button" class="btn btn-sm btn-ghost" id="dialogue-play-all">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> 连续朗读 Play All
+              </button>
+              <label class="check">
+                <input type="checkbox" id="dialogue-toggle-zh" checked> 显示中文译文 Chinese
+              </label>
+            </div>
+          </div>
+
+          <p class="dialogue-desc" id="dialogue-desc"></p>
+
+          <div class="dialogue-flow" id="dialogue-flow" aria-live="polite"></div>
+
+          <div class="dialogue-notes" id="dialogue-notes">
+            <h4>💡 核心地道表达 · Key Takeaways</h4>
+            <div class="notes-grid" id="dialogue-notes-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- READING -->
+    <section class="section" id="reading">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-num">04</p>
+          <div>
+            <h2>分级短文阅读 <span class="h-en">Reading Comprehension</span></h2>
+            <p class="section-intro">精选契合 A1–A2 水平的短篇阅读，涵盖文化、旅行、学习方法与城市生活。附带段落朗读、双语对照切换与即时理解小测。<br><span class="en-note">Graded short passages with paragraph audio, bilingual toggles, and comprehension check questions.</span></p>
+          </div>
+        </header>
+
+        <div class="reading-box">
+          <div class="reading-tabs" id="reading-tabs" role="tablist" aria-label="Reading passages"></div>
+
+          <article class="passage-card">
+            <div class="passage-header">
+              <div>
+                <div class="passage-tags" id="passage-tags"></div>
+                <h3 id="passage-title" class="passage-title">—</h3>
+                <p id="passage-title-zh" class="passage-title-zh">—</p>
+              </div>
+              <div class="passage-tools">
+                <button type="button" class="btn btn-sm btn-ghost" id="passage-read-all">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg> 朗读全篇 Listen
+                </button>
+                <label class="check">
+                  <input type="checkbox" id="passage-toggle-zh" checked> 双语对照 Bilingual
+                </label>
+              </div>
+            </div>
+
+            <div class="passage-body" id="passage-body"></div>
+
+            <div class="passage-vocab">
+              <h4 class="pv-head">📚 核心词汇储备 · Key Vocabulary</h4>
+              <div class="pv-grid" id="passage-vocab-grid"></div>
+            </div>
+
+            <div class="passage-quiz">
+              <h4 class="pq-head">✍️ 阅读理解检测 · Comprehension Check</h4>
+              <div class="pq-list" id="passage-quiz-list"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTENING -->
+    <section class="section section-alt" id="listening">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-num">05</p>
+          <div>
+            <h2>专项听力训练 <span class="h-en">Listening Drills</span></h2>
+            <p class="section-intro">攻克中文母语者的听力盲区：数字与时间区别（-teen vs -ty）、连读弱读、语境长短音辨析以及日常问答反应。支持正常语速与慢速播放。<br><span class="en-note">Targeted listening exercises for common hurdles like connected speech, reduced sounds, and numbers.</span></p>
+          </div>
+        </header>
+
+        <div class="listening-box">
+          <div class="listening-nav" id="listening-nav"></div>
+
+          <div class="listening-card" id="listening-card">
+            <div class="lc-top">
+              <span class="lc-category" id="lc-category">—</span>
+              <span class="lc-counter" id="lc-counter">1 / 6</span>
+            </div>
+
+            <h3 class="lc-title" id="lc-title">—</h3>
+            <p class="lc-prompt" id="lc-prompt">—</p>
+
+            <div class="audio-player-box">
+              <button type="button" class="btn btn-primary btn-play-audio" id="lc-play-btn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <span>播放音频 Play Audio</span>
+              </button>
+              <div class="audio-controls">
+                <button type="button" class="btn btn-sm btn-ghost" id="lc-slow-btn">
+                  <span>🐢 慢速播放 Slow (0.75x)</span>
+                </button>
+                <span class="audio-hint">可重复点击多次听辨</span>
+              </div>
+            </div>
+
+            <p class="lc-q" id="lc-question">—</p>
+            <div class="lc-options" id="lc-options"></div>
+
+            <div class="lc-feedback" id="lc-feedback" hidden>
+              <div class="lc-transcript-box">
+                <p class="lc-t-label">原文听力文本 Transcript:</p>
+                <p class="lc-transcript" id="lc-transcript"></p>
+              </div>
+              <p class="lc-tip" id="lc-tip"></p>
+              <button type="button" class="btn btn-primary" id="lc-next-btn">下一题 Next Exercise</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHRASES -->
+    <section class="section" id="phrases">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-num">06</p>
           <div>
             <h2>常用短语卡片 <span class="h-en">Phrase cards</span></h2>
             <p class="section-intro">先看中文，想一想英文怎么说，再翻开卡片核对。<br><span class="en-note">Read the Chinese, say it in English, then flip the card to check.</span></p>
@@ -177,7 +323,7 @@
     <section class="section" id="grammar">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">04</p>
+          <p class="section-num">07</p>
           <div>
             <h2>中英语法差异 <span class="h-en">Where the grammar differs</span></h2>
             <p class="section-intro">中文靠语序和时间词表达意思，英语还要改变单词本身。了解这些差异，可以避免大部分错误。<br><span class="en-note">Chinese relies on word order and time words; English also changes the words themselves.</span></p>
@@ -191,7 +337,7 @@
     <section class="section section-ink" id="mistakes">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">05</p>
+          <p class="section-num">08</p>
           <div>
             <h2>常见中式英语 <span class="h-en">Common Chinglish, fixed</span></h2>
             <p class="section-intro">这些句子是直接从中文翻译过来的。看看地道的说法。<br><span class="en-note">Direct translations from Chinese — and what native speakers actually say.</span></p>
@@ -205,7 +351,7 @@
     <section class="section" id="practice">
       <div class="wrap narrow">
         <header class="section-head">
-          <p class="section-num">06</p>
+          <p class="section-num">09</p>
           <div>
             <h2>小测验 <span class="h-en">Quick quiz</span></h2>
             <p class="section-intro">选出正确的英语表达。每题都有解释。<br><span class="en-note">Pick the correct English. Every answer comes with an explanation.</span></p>
@@ -242,6 +388,7 @@
   <script src="assets/data.js"></script>
   <script src="assets/vocab-a1.js"></script>
   <script src="assets/vocab-a2.js"></script>
+  <script src="assets/lessons.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>
