@@ -11,6 +11,19 @@
   <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem("cn1_theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "dark" || (!saved && prefersDark)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content · 跳到正文</a>
@@ -28,10 +41,21 @@
         <a href="#reading">阅读 <span>Reading</span></a>
         <a href="#listening">听力 <span>Listening</span></a>
         <a href="#phrases">短语 <span>Phrases</span></a>
+        <a href="#phrasal-verbs">动词短语 <span>Phrasal</span></a>
         <a href="#grammar">语法 <span>Grammar</span></a>
         <a href="#mistakes">纠错 <span>Fixes</span></a>
         <a href="#practice">练习 <span>Practice</span></a>
       </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+        <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+        </svg>
+        <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span class="theme-toggle-text">Dark</span>
+      </button>
     </div>
   </header>
 
@@ -427,6 +451,11 @@
         <p class="foot-note">一个为中文母语者设计的免费英语学习资源。<br>A free teaching and studying resource for Mandarin speakers learning English.</p>
       </div>
       <p class="foot-links">
+        <button type="button" class="theme-toggle" id="footer-theme-toggle" aria-label="Toggle dark mode">
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span class="theme-toggle-text">Dark</span>
+        </button>
         <a href="https://github.com/chanAle-lab/CNn1English.github.io-">GitHub</a>
         <a href="#top">回到顶部 Back to top ↑</a>
       </p>

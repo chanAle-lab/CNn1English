@@ -16,6 +16,48 @@
   };
   var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>';
 
+  /* ---------- Theme (Dark / Light Mode) ---------- */
+  (function themeController() {
+    var toggleBtns = document.querySelectorAll(".theme-toggle");
+
+    function getTheme() {
+      return document.documentElement.getAttribute("data-theme") || "light";
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      try { localStorage.setItem("cn1_theme", theme); } catch (e) {}
+      toggleBtns.forEach(function (btn) {
+        var isDark = theme === "dark";
+        btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+        btn.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
+        var textEl = btn.querySelector(".theme-toggle-text");
+        if (textEl) textEl.textContent = isDark ? "Light" : "Dark";
+      });
+    }
+
+    toggleBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var next = getTheme() === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
+    });
+
+    // Sync initial UI
+    applyTheme(getTheme());
+
+    // Listen for OS scheme changes if user hasn't set an explicit preference
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+        try {
+          if (!localStorage.getItem("cn1_theme")) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        } catch (err) {}
+      });
+    }
+  })();
+
   /* ---------- Speech ---------- */
   var lang = "en-US";
   var rateInput = $("#rate");
