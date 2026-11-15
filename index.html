@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Edu+SA+Beginner:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <script>
     (function() {
@@ -46,6 +46,7 @@
     </div>
     <nav class="nav" aria-label="Main">
       <a href="#sounds">发音 <span>Sounds</span></a>
+      <a href="#writing">书写 <span>Writing</span></a>
       <a href="#vocab">词汇 <span>Words</span></a>
       <a href="#dialogues">对话 <span>Dialogues</span></a>
       <a href="#reading">阅读 <span>Reading</span></a>
@@ -90,15 +91,16 @@
       <div class="wrap path">
         <ol class="path-list">
           <li><a href="#sounds"><b>01</b><span>发音难点</span><small>Sounds Chinese lacks</small></a></li>
-          <li><a href="#vocab"><b>02</b><span>核心词汇</span><small>A1 / A2 Vocabulary</small></a></li>
-          <li><a href="#dialogues"><b>03</b><span>情景对话</span><small>Real-life dialogues</small></a></li>
-          <li><a href="#reading"><b>04</b><span>分级阅读</span><small>Graded passages</small></a></li>
-          <li><a href="#listening"><b>05</b><span>听力训练</span><small>Listening drills</small></a></li>
-          <li><a href="#phrases"><b>06</b><span>常用短语</span><small>Everyday phrases</small></a></li>
-          <li><a href="#phrasal-verbs"><b>07</b><span>动词短语</span><small>Phrasal verbs & idioms</small></a></li>
-          <li><a href="#grammar"><b>08</b><span>语法差异</span><small>Grammar differences</small></a></li>
-          <li><a href="#mistakes"><b>09</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
-          <li><a href="#practice"><b>10</b><span>测验与错题本</span><small>Quiz & review notebook</small></a></li>
+          <li><a href="#writing"><b>02</b><span>字母与连笔</span><small>Handwriting & Cursive</small></a></li>
+          <li><a href="#vocab"><b>03</b><span>核心词汇</span><small>A1 / A2 Vocabulary</small></a></li>
+          <li><a href="#dialogues"><b>04</b><span>情景对话</span><small>Real-life dialogues</small></a></li>
+          <li><a href="#reading"><b>05</b><span>分级阅读</span><small>Graded passages</small></a></li>
+          <li><a href="#listening"><b>06</b><span>听力训练</span><small>Listening drills</small></a></li>
+          <li><a href="#phrases"><b>07</b><span>常用短语</span><small>Everyday phrases</small></a></li>
+          <li><a href="#phrasal-verbs"><b>08</b><span>动词短语</span><small>Phrasal verbs & idioms</small></a></li>
+          <li><a href="#grammar"><b>09</b><span>语法差异</span><small>Grammar differences</small></a></li>
+          <li><a href="#mistakes"><b>10</b><span>中式英语</span><small>Common Chinglish fixes</small></a></li>
+          <li><a href="#practice"><b>11</b><span>测验与错题本</span><small>Quiz & review notebook</small></a></li>
         </ol>
       </div>
     </section>
@@ -125,11 +127,127 @@
       </div>
     </section>
 
+    <!-- WRITING & CURSIVE -->
+    <section class="section section-writing" id="writing">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-num">02</p>
+          <div>
+            <h2>字母规范书写与连写 <span class="h-en">Letter Writing &amp; Cursive</span></h2>
+            <p class="section-intro">掌握标准四线三格规范印刷体与优雅美式连笔草书（圆体）。包含26个字母笔画笔顺、中格占位规范、高位横连法则与互动描红练字板。<br><span class="en-note">Master English letter formation on four-line guidelines, stroke order, zoning, cursive connections, and essential handwriting techniques.</span></p>
+          </div>
+        </header>
+
+        <!-- Sub-navigation tabs -->
+        <div class="writing-tabs" role="tablist" aria-label="Writing sections">
+          <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="letters">
+            26字母四线三格 · Letters A–Z
+          </button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="cursive">
+            连笔核心法则 · Cursive Rules
+          </button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="pitfalls">
+            易错辨析与规范 · Common Pitfalls
+          </button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="canvas">
+            互动写字板 · Practice Canvas
+          </button>
+        </div>
+
+        <!-- TAB 1: 26 Letters & 4-Line Grid Explorer -->
+        <div class="writing-tab-panel active" id="panel-letters">
+          <div class="letter-picker" id="letter-picker" aria-label="Select letter"></div>
+          <div class="letter-card" id="letter-card"></div>
+        </div>
+
+        <!-- TAB 2: Cursive Joining Rules & Word Gallery -->
+        <div class="writing-tab-panel" id="panel-cursive" hidden>
+          <div class="cursive-rules-grid" id="cursive-rules-grid"></div>
+          <div class="cursive-showcase">
+            <div class="cursive-showcase-head">
+              <h3>高频连笔词汇与签名演示 <span class="h-en">Cursive Words &amp; Signatures</span></h3>
+              <p>点击小喇叭听纯正读音，或点击“在画板临摹”一键将单词载入下方练字板进行描红。</p>
+            </div>
+            <div class="cursive-words-grid" id="cursive-words-grid"></div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Common Pitfalls & Guidelines -->
+        <div class="writing-tab-panel" id="panel-pitfalls" hidden>
+          <div class="pitfalls-grid" id="pitfalls-grid"></div>
+          <div class="fourline-anatomy">
+            <h3>四线三格标准占格图解 <span class="h-en">The 4-Line 3-Space System</span></h3>
+            <div class="anatomy-visual">
+              <div class="anatomy-zone zone-upper">
+                <span class="zone-tag">上格 Upper Zone</span>
+                <span class="zone-letters">b, d, f, h, k, l, t 及全部大写字母 A–Z</span>
+              </div>
+              <div class="anatomy-zone zone-middle">
+                <span class="zone-tag">中格 Middle Zone (核心基石)</span>
+                <span class="zone-letters">a, c, e, m, n, o, r, s, u, v, w, x, z (严格紧贴中线与基线)</span>
+              </div>
+              <div class="anatomy-zone zone-lower">
+                <span class="zone-tag">下格 Lower Zone (下垂字母)</span>
+                <span class="zone-letters">g, j, p, q, y (尾部深入下格)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Interactive Practice Board (Canvas) -->
+        <div class="writing-tab-panel" id="panel-canvas" hidden>
+          <div class="canvas-workspace">
+            <div class="canvas-toolbar">
+              <div class="tool-group">
+                <span class="tool-label">描红底样:</span>
+                <select id="canvas-trace-select" class="canvas-select" aria-label="Select letter or word to trace"></select>
+                <button type="button" class="btn-tool active" id="canvas-toggle-trace">底样: 开</button>
+                <button type="button" class="btn-tool" id="canvas-font-mode">字体: 连笔草书</button>
+              </div>
+
+              <div class="tool-group">
+                <span class="tool-label">笔刷:</span>
+                <div class="color-swatches" id="color-swatches">
+                  <button type="button" class="color-btn active" data-color="#18181b" style="background:#18181b;" title="墨黑"></button>
+                  <button type="button" class="color-btn" data-color="#1d4ed8" style="background:#1d4ed8;" title="圆珠笔蓝"></button>
+                  <button type="button" class="color-btn" data-color="#b8322a" style="background:#b8322a;" title="中国红"></button>
+                  <button type="button" class="color-btn" data-color="#4b5563" style="background:#4b5563;" title="铅笔灰"></button>
+                </div>
+                <label class="slider-label">粗细
+                  <input type="range" id="pen-size" min="2" max="10" value="4">
+                </label>
+              </div>
+
+              <div class="tool-group actions">
+                <button type="button" class="btn-tool" id="canvas-undo" title="撤回上一笔">
+                  <svg viewBox="0 0 24 24" class="tool-icon"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                  撤回 Undo
+                </button>
+                <button type="button" class="btn-tool" id="canvas-clear" title="清空画板">
+                  <svg viewBox="0 0 24 24" class="tool-icon"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  清空 Clear
+                </button>
+                <button type="button" class="btn-tool btn-primary-tool" id="canvas-save" title="保存我的书写为高清图片">
+                  <svg viewBox="0 0 24 24" class="tool-icon"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                  保存字帖 Save
+                </button>
+              </div>
+            </div>
+
+            <div class="canvas-wrapper">
+              <canvas id="practice-canvas" width="1000" height="380"></canvas>
+              <div class="canvas-hint">支持鼠标、触控屏及 Apple Pencil / 手写笔临摹书写 · Touch, Stylus &amp; Mouse enabled</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- VOCAB -->
     <section class="section section-vocab" id="vocab">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">02</p>
+          <p class="section-num">03</p>
           <div>
             <h2>核心词汇 <span class="h-en">Vocabulary (A1 / A2)</span></h2>
             <p class="section-intro">欧洲语言共同参考框架（CEFR）等级词汇库。当前级别共收录 <b id="vocab-total">0</b> 个单词，包含中文释义、例句与标准发音。点击单词听读音，勾选“认识”记录进度。<br><span class="en-note">CEFR A1 and A2 vocabulary lists with Chinese definitions, examples, audio, and progress tracking.</span></p>
@@ -192,7 +310,7 @@
     <section class="section section-alt" id="dialogues">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">03</p>
+          <p class="section-num">04</p>
           <div>
             <h2>情景实战对话 <span class="h-en">Interactive Dialogues</span></h2>
             <p class="section-intro">沉浸在真实的海外日常场景中：点咖啡、机场登机、街头问路与聚会邀约。点击单句听发音，支持自动连读朗读与中英译文切换。<br><span class="en-note">Realistic conversation scenarios. Tap any sentence to listen, play the full dialogue, and toggle Chinese translations.</span></p>
@@ -233,7 +351,7 @@
     <section class="section" id="reading">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">04</p>
+          <p class="section-num">05</p>
           <div>
             <h2>分级短文阅读 <span class="h-en">Reading Comprehension</span></h2>
             <p class="section-intro">精选契合 A1–A2 水平的短篇阅读，涵盖文化、旅行、学习方法与城市生活。附带段落朗读、双语对照切换与即时理解小测。<br><span class="en-note">Graded short passages with paragraph audio, bilingual toggles, and comprehension check questions.</span></p>
@@ -280,7 +398,7 @@
     <section class="section section-alt" id="listening">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">05</p>
+          <p class="section-num">06</p>
           <div>
             <h2>专项听力训练 <span class="h-en">Listening Drills</span></h2>
             <p class="section-intro">攻克中文母语者的听力盲区：数字与时间区别（-teen vs -ty）、连读弱读、语境长短音辨析以及日常问答反应。支持正常语速与慢速播放。<br><span class="en-note">Targeted listening exercises for common hurdles like connected speech, reduced sounds, and numbers.</span></p>
@@ -332,7 +450,7 @@
     <section class="section" id="phrases">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">06</p>
+          <p class="section-num">07</p>
           <div>
             <h2>常用短语卡片 <span class="h-en">Phrase cards</span></h2>
             <p class="section-intro">先看中文，想一想英文怎么说，再翻开卡片核对。<br><span class="en-note">Read the Chinese, say it in English, then flip the card to check.</span></p>
@@ -347,7 +465,7 @@
     <section class="section section-alt" id="phrasal-verbs">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">07</p>
+          <p class="section-num">08</p>
           <div>
             <h2>动词短语与地道习语 <span class="h-en">Phrasal Verbs &amp; Idioms</span></h2>
             <p class="section-intro">中文缺乏“动词+小品词”的搭配系统，很多表达无法按字面直译。点击卡片朗读并理解空间隐喻逻辑，攻克口语盲区。<br><span class="en-note">Phrasal verbs combine verbs with particles (up, off, out, down) to express nuanced actions. Tap to listen and check the visual logic.</span></p>
@@ -383,7 +501,7 @@
     <section class="section" id="grammar">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">08</p>
+          <p class="section-num">09</p>
           <div>
             <h2>中英语法差异 <span class="h-en">Where the grammar differs</span></h2>
             <p class="section-intro">中文靠语序和时间词表达意思，英语还要改变单词本身。了解这些差异，可以避免大部分错误。<br><span class="en-note">Chinese relies on word order and time words; English also changes the words themselves.</span></p>
@@ -397,7 +515,7 @@
     <section class="section section-ink" id="mistakes">
       <div class="wrap">
         <header class="section-head">
-          <p class="section-num">09</p>
+          <p class="section-num">10</p>
           <div>
             <h2>常见中式英语 <span class="h-en">Common Chinglish, fixed</span></h2>
             <p class="section-intro">这些句子是直接从中文翻译过来的。看看地道的说法。<br><span class="en-note">Direct translations from Chinese — and what native speakers actually say.</span></p>
@@ -411,7 +529,7 @@
     <section class="section" id="practice">
       <div class="wrap narrow">
         <header class="section-head">
-          <p class="section-num">10</p>
+          <p class="section-num">11</p>
           <div>
             <h2>测验练习与错题本 <span class="h-en">Quiz &amp; Review Notebook</span></h2>
             <p class="section-intro">涵盖语法、时态、发音、中式英语避坑与动词短语。做错的题目会自动收入“错题本”，方便针对性复习巩固。<br><span class="en-note">Comprehensive 36-question test bank with automatic mistake tracking. Review missed questions anytime until full mastery.</span></p>
@@ -465,6 +583,7 @@
   <script src="assets/vocab-a1.js"></script>
   <script src="assets/vocab-a2.js"></script>
   <script src="assets/lessons.js"></script>
+  <script src="assets/writing.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

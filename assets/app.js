@@ -86,6 +86,7 @@
     }
     speechSynthesis.speak(u);
   }
+  window.CN1_SPEAK = speak;
   if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = function () {};
 
   document.querySelectorAll(".accent-toggle [data-lang]").forEach(function (b) {
