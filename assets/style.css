@@ -260,8 +260,321 @@ p { margin: 0; }
 .quiz-explain { margin-top: 18px; padding: 14px 16px; border-radius: 12px; font-size: var(--text-sm); }
 .quiz-explain.ok { background: var(--jade-soft); color: var(--jade); }
 .quiz-explain.no { background: var(--red-soft); color: var(--red-deep); }
-#quiz-next { margin-top: 20px; }
+#quiz-next { margin-top: 0; }
 .quiz-final { font-size: var(--text-lg); color: var(--ink-2); }
+
+/* Quiz Mode Bar & Mistakes */
+.quiz-mode-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.mode-btn {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .2s;
+}
+.mode-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.mode-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.mode-btn.active .count-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+.quiz-mode-label {
+  font-size: var(--text-xs);
+  padding: 3px 8px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+}
+.quiz-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.quiz-badge-review {
+  display: inline-block;
+  background: var(--red-soft);
+  color: var(--red-deep);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+.quiz-empty-box {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--muted);
+}
+.quiz-empty-box h3 {
+  font-size: var(--text-xl);
+  color: var(--jade);
+  margin-bottom: 8px;
+}
+
+/* =======================================================
+   PHRASAL VERBS & IDIOMS MODULE
+   ======================================================= */
+.phv-module {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.phv-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.phv-search-box input {
+  width: 280px;
+  max-width: 100%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+}
+.phv-search-box input:focus {
+  border-color: var(--red);
+}
+.phv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.phv-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s, border-color .2s;
+}
+.phv-card:hover {
+  border-color: var(--ink-2);
+  transform: translateY(-2px);
+}
+.phv-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.phv-phrase {
+  font-family: var(--font-en);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--red-deep);
+}
+.phv-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.phv-tag.up { background: #fff5eb; color: #b45309; border-color: #fed7aa; }
+.phv-tag.off { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.phv-tag.out { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.phv-tag.down { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.phv-tag.other { background: #faf5ff; color: #6b21a8; border-color: #e9d5ff; }
+
+.phv-zh {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--ink);
+}
+.phv-logic {
+  background: var(--paper);
+  border-left: 3px solid var(--red);
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.phv-logic b {
+  color: var(--red-deep);
+}
+.phv-tip {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.45;
+}
+.phv-tip b {
+  color: var(--ink);
+}
+.phv-ex-box {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.phv-ex-en-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.phv-ex-en {
+  font-family: var(--font-en);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  font-weight: 500;
+}
+.phv-speak-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color .2s, background .2s;
+  flex-shrink: 0;
+}
+.phv-speak-btn:hover {
+  color: var(--red);
+  background: var(--red-soft);
+}
+.phv-speak-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.phv-ex-zh {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+/* Phrasal Verb Mini Drill */
+.phv-drill-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: var(--shadow);
+  margin-top: 12px;
+}
+.phv-drill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.phv-drill-header h4 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.phv-drill-sub {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.phv-drill-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.phv-drill-prompt {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: var(--text-base);
+}
+.phv-drill-sentence {
+  font-family: var(--font-en);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  line-height: 1.5;
+}
+.phv-drill-sentence u {
+  text-decoration: none;
+  border-bottom: 2px dashed var(--red);
+  padding: 0 4px;
+  color: var(--red);
+}
+.phv-drill-opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+.phv-opt-btn {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: var(--text-base);
+  font-family: var(--font-en);
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+.phv-opt-btn:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: #fff;
+}
+.phv-opt-btn.correct {
+  background: var(--jade-soft);
+  border-color: var(--jade);
+  color: var(--jade);
+}
+.phv-opt-btn.wrong {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red-deep);
+}
+.phv-drill-feedback {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.phv-drill-feedback.ok { background: var(--jade-soft); color: var(--jade); }
+.phv-drill-feedback.no { background: var(--red-soft); color: var(--red-deep); }
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--line); padding: 40px 0 48px; }

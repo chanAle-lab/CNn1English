@@ -10,9 +10,10 @@ A teaching and studying resource for Mandarin speakers to learn English! 为中�
 - **分级阅读 Reading Comprehension** – 4 graded passages with paragraph audio read-aloud, bilingual toggle, key vocabulary chips, and multiple-choice comprehension check questions
 - **专项听力 Listening Drills** – 6 targeted listening challenges overcoming common obstacles for Mandarin speakers (number distinction like 15 vs 50, connected speech, minimal pairs, directions, shopping, quick response) with normal and slow (0.75x) playback and full transcripts
 - **短语 Phrases** – flip cards for greetings, daily life, restaurants, travel and work
+- **动词短语与地道习语 Phrasal Verbs & Idioms** – 30 core phrasal verbs and high-frequency idioms categorized by particle (up, off, out, down, other) with cognitive logic breakdowns, collocations, audio, and an interactive quick drill
 - **语法 Grammar** – the key differences between Chinese and English grammar
 - **纠错 Fixes** – common Chinglish sentences and the natural alternative
-- **练习 Practice** – a 10-question quiz with explanations
+- **练习测验与错题本 Practice & Review Notebook** – 36 comprehensive test questions covering grammar, minimal pairs, Chinglish fixes, and phrasal verbs, with automatic mistake tracking and a dedicated Review Notebook for targeted re-testing
 
 ## Editing content
-All foundational lessons live in `assets/data.js`; extended interactive modules (dialogues, reading, listening) are in `assets/lessons.js`; the vocabulary lists are in `assets/vocab-a1.js` and `assets/vocab-a2.js`. No build step: it's plain HTML/CSS/JS served by GitHub Pages from the `main` branch.
+All foundational lessons and the 36-question quiz live in `assets/data.js`; extended interactive modules (dialogues, reading, listening, phrasal verbs) are in `assets/lessons.js`; the vocabulary lists are in `assets/vocab-a1.js` and `assets/vocab-a2.js`. No build step: it's plain HTML/CSS/JS served by GitHub Pages from the `main` branch.

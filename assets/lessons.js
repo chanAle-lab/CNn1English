@@ -427,5 +427,411 @@ window.CN1_LESSONS = {
       transcript: "Do you mind if I open the window for some fresh air?",
       tip: "【高频易错点】'Do you mind...?' 意为“你介意……吗？”如果你同意对方做（即不介意），一定要回答否定形式，如 'Not at all'（一点也不介意）或 'No, go ahead'。如果回答 'Yes'，实际意思反而变成了“是的，我很介意，请别开”！"
     }
-  ]
+  ],
+  phrasalVerbs: [
+  {
+    "id": "pv-give-up",
+    "phrase": "give up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "放弃；停止努力",
+    "logic": "字面：向上交出。引申：高举双手交出控制权，即“认输投降、不再坚持”。",
+    "tip": "及物动词短语，后接名词或 V-ing。若接代词，代词放中间：give it up（不能说 give up it）。",
+    "ex": "Never give up on your dreams, even when things get difficult.",
+    "exZh": "即使事情变得艰难，也绝不要放弃你的梦想。"
+  },
+  {
+    "id": "pv-clean-up",
+    "phrase": "clean up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "彻底收拾干净；整理",
+    "logic": "particle 'up' 常表动作的“彻底、完全”完成（如 eat up 吃光, drink up 喝光）。clean up 即“收拾得干干净净”。",
+    "tip": "常用于房间、桌面或事故现场的清理：clean up the room / clean up the mess。",
+    "ex": "Please clean up your study desk before dinner.",
+    "exZh": "晚饭前请把你的书桌收拾干净。"
+  },
+  {
+    "id": "pv-show-up",
+    "phrase": "show up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "露面；赶到；出席",
+    "logic": "字面：显现出来。引申为在某个约定场合露面，常用于口语中代替 arrive。",
+    "tip": "不及物短语，后面不直接加宾语；表示迟到时非常高频：He showed up late。",
+    "ex": "Over fifty people showed up for the free English workshop.",
+    "exZh": "有五十多人出席了这次免费英语工作坊。"
+  },
+  {
+    "id": "pv-look-up",
+    "phrase": "look up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "查阅（词典/信息）；抬头看",
+    "logic": "字面：抬头仰望。引申为在书架、词典或网络中“检索信息”。",
+    "tip": "代词放中间：look it up in the dictionary（不能说 look up it）。",
+    "ex": "If you don't know this word, you can look it up in the dictionary.",
+    "exZh": "如果你不认识这个单词，可以在词典里查一查。"
+  },
+  {
+    "id": "pv-end-up",
+    "phrase": "end up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "最终到达；以……告终",
+    "logic": "end（结束）+ up（彻底）。引申为经历意外或转折后，最终落得某种结果。",
+    "tip": "后面常接介词短语（end up in London）或动名词（end up paying double）。",
+    "ex": "We took the wrong turn and ended up in another city.",
+    "exZh": "我们拐错了弯，结果跑到了另一座城市。"
+  },
+  {
+    "id": "pv-cheer-up",
+    "phrase": "cheer up",
+    "particle": "up",
+    "category": "UP 彻底/向上",
+    "zh": "（使）振作起来；高兴起来",
+    "logic": "cheer（欢呼）+ up（向上）。情绪从低落的谷底升起，重新振作。",
+    "tip": "常作为祈使句直接安慰朋友：Cheer up! 也可以是及物动词：cheer him up。",
+    "ex": "Cheer up! Everything is going to be completely fine.",
+    "exZh": "振作起来！一切都会好起来的。"
+  },
+  {
+    "id": "pv-turn-off",
+    "phrase": "turn off",
+    "particle": "off",
+    "category": "OFF 离开/分离",
+    "zh": "关掉（电灯/电器/水龙头）",
+    "logic": "off 表示“断开、切断触点”。turn on 是接通，turn off 是断开电源。",
+    "tip": "中文常说“关电脑/关灯”，很多初学者误用 close。记住：门窗用 close，电器用 turn off！",
+    "ex": "Remember to turn off the lights when you leave the room.",
+    "exZh": "离开房间时请记得随手关灯。"
+  },
+  {
+    "id": "pv-take-off",
+    "phrase": "take off",
+    "particle": "off",
+    "category": "OFF 离开/分离",
+    "zh": "起飞；脱下（衣帽鞋）",
+    "logic": "take（拿走）+ off（离开表面）。飞机脱离地面 = 起飞；衣服脱离身体 = 脱下。",
+    "tip": "双重核心含义：The plane took off（飞机起飞）；Take off your coat（脱掉外套）。",
+    "ex": "Please take off your shoes before entering the Japanese tea house.",
+    "exZh": "进入日式茶室前请先脱鞋。"
+  },
+  {
+    "id": "pv-put-off",
+    "phrase": "put off",
+    "particle": "off",
+    "category": "OFF 离开/分离",
+    "zh": "推迟；拖延",
+    "logic": "put（放置）+ off（移开/远离当下）。把原本计划好的事情移到以后做，即“推迟”。",
+    "tip": "常接动名词 V-ing：put off doing something。如常见谚语：Never put off till tomorrow what you can do today。",
+    "ex": "They decided to put off the meeting until next Wednesday.",
+    "exZh": "他们决定把会议推迟到下周三。"
+  },
+  {
+    "id": "pv-call-off",
+    "phrase": "call off",
+    "particle": "off",
+    "category": "OFF 离开/分离",
+    "zh": "取消（活动/计划）",
+    "logic": "call（呼唤宣告）+ off（终止）。官方或组织者出面宣布活动不再举行。",
+    "tip": "与 put off（推迟）不同，call off 是彻底取消（cancel）。",
+    "ex": "The referee had to call off the soccer match due to heavy snow.",
+    "exZh": "由于大雪，裁判不得不取消了这场足球比赛。"
+  },
+  {
+    "id": "pv-set-off",
+    "phrase": "set off",
+    "particle": "off",
+    "category": "OFF 离开/分离",
+    "zh": "出发；启程；动身",
+    "logic": "set（就位准备）+ off（离开起点）。动身开始一段旅程（英式英语中极常用）。",
+    "tip": "常搭配时间状语：set off early in the morning（大清早动身出发）。",
+    "ex": "We need to set off early tomorrow to beat the rush-hour traffic.",
+    "exZh": "我们明天需要早点出发，避开早高峰交通。"
+  },
+  {
+    "id": "pv-find-out",
+    "phrase": "find out",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "查明；弄清楚；发现事实",
+    "logic": "find（找到）+ out（公之于众/明朗）。通过打听、研究把隐藏的信息揭示出来。",
+    "tip": "常接 that 从句或特殊疑问句：find out when the bus arrives / find out the truth。",
+    "ex": "Can you find out what time the supermarket closes tonight?",
+    "exZh": "你能弄清楚今晚超市几点关门吗？"
+  },
+  {
+    "id": "pv-figure-out",
+    "phrase": "figure out",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "弄明白；想出办法",
+    "logic": "figure（计算思考）+ out（得出结果）。通过大脑思考分析，最终把难题琢磨明白。",
+    "tip": "口语极高频：I can't figure it out（我实在想不通/搞不懂）。",
+    "ex": "I am trying to figure out how this new software works.",
+    "exZh": "我正在琢磨这款新软件到底该怎么用。"
+  },
+  {
+    "id": "pv-run-out-of",
+    "phrase": "run out of",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "用完；耗尽",
+    "logic": "run（流失流动）+ out of（脱离/耗尽范围）。东西彻底用光，手头一点都不剩。",
+    "tip": "常用于：run out of time（没时间了）、run out of money（花光钱）、run out of milk（牛奶喝光了）。",
+    "ex": "Hurry up! We are running out of time before the gate closes.",
+    "exZh": "快点！登机口关闭前我们的时间不多了。"
+  },
+  {
+    "id": "pv-check-out",
+    "phrase": "check out",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "办理退房；查看；结账",
+    "logic": "check（登记核对）+ out（离开）。在酒店核对账单离开，或口语中“看看新鲜事物”。",
+    "tip": "退房必备表达：What time is check-out? / We checked out at eleven.",
+    "ex": "Guests are required to check out before 11:00 AM.",
+    "exZh": "住客需在上午 11 点前办理退房手续。"
+  },
+  {
+    "id": "pv-hang-out",
+    "phrase": "hang out",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "闲逛；聚会休闲",
+    "logic": "hang（悬挂停留）+ out（在外面）。朋友之间没有具体严肃的目的，纯粹一起放松聚会。",
+    "tip": "常搭配 with：hang out with friends on the weekend（周末和朋友一起玩/逛街）。",
+    "ex": "Do you want to hang out at the local cafe this afternoon?",
+    "exZh": "你今天下午想去街角咖啡馆一起坐坐坐、聊聊天吗？"
+  },
+  {
+    "id": "pv-point-out",
+    "phrase": "point out",
+    "particle": "out",
+    "category": "OUT 探究/耗尽",
+    "zh": "指出；向人提示",
+    "logic": "point（用手指）+ out（显现出来）。将某人的注意力引向某个容易被忽略的事实或错误。",
+    "tip": "及物短语：point out a mistake / point out the directions。",
+    "ex": "The teacher kindly pointed out two spelling mistakes in my essay.",
+    "exZh": "老师善意地指出了我作文里的两处拼写错误。"
+  },
+  {
+    "id": "pv-turn-down",
+    "phrase": "turn down",
+    "particle": "down",
+    "category": "DOWN 降低/减缓",
+    "zh": "调小音量/温度；拒绝邀请",
+    "logic": "turn（旋转旋钮）+ down（向下）。把旋钮向下旋以降低音量；引申为把提议压下不予接受（拒绝）。",
+    "tip": "两大高频用法：Turn down the music（调低音乐）；turn down the job offer（婉拒工作邀约）。",
+    "ex": "Could you please turn down the TV? I am trying to read.",
+    "exZh": "你能把电视声音调小一点吗？我正在看书。"
+  },
+  {
+    "id": "pv-calm-down",
+    "phrase": "calm down",
+    "particle": "down",
+    "category": "DOWN 降低/减缓",
+    "zh": "冷静下来；平息怒气",
+    "logic": "calm（平静）+ down（平稳降落）。让激动、愤怒或恐惧的情绪降温平复。",
+    "tip": "既可作不及物动词安慰人（Calm down!），也可作及物动词（calm the baby down）。",
+    "ex": "Take a deep breath and calm down before you answer the phone.",
+    "exZh": "接电话前先深吸一口气，让自己冷静下来。"
+  },
+  {
+    "id": "pv-break-down",
+    "phrase": "break down",
+    "particle": "down",
+    "category": "DOWN 降低/减缓",
+    "zh": "出故障（机器）；崩溃痛哭",
+    "logic": "break（破损）+ down（倒下瓦解）。机器损坏停止运转，或者人的心理防线彻底崩溃。",
+    "tip": "汽车抛锚、电梯停运最地道表达：The car broke down / The elevator broke down。",
+    "ex": "Our taxi broke down on the motorway, so we arrived an hour late.",
+    "exZh": "我们的出租车在高速公路上抛锚了，所以我们迟到了一个小时。"
+  },
+  {
+    "id": "pv-slow-down",
+    "phrase": "slow down",
+    "particle": "down",
+    "category": "DOWN 降低/减缓",
+    "zh": "减速；慢下来；放松节奏",
+    "logic": "slow（慢）+ down（降速）。降低行进速度或放慢忙碌的生活节奏。",
+    "tip": "司机开车或快节奏工作时的常用叮嘱：Slow down! You're working too hard.",
+    "ex": "The sign says you must slow down when approaching a school zone.",
+    "exZh": "路标指示在靠近学校区域时必须减速慢行。"
+  },
+  {
+    "id": "pv-write-down",
+    "phrase": "write down",
+    "particle": "down",
+    "category": "DOWN 降低/减缓",
+    "zh": "写下；把……记在纸上",
+    "logic": "write（写）+ down（落笔落在纸面上）。把听到的信息记录在笔记本或便签上。",
+    "tip": "代词在中间：write it down。常用于记录电话号码或地址。",
+    "ex": "Let me write down your email address so I don't forget it.",
+    "exZh": "让我把你的电子邮箱地址记下来，免得忘了。"
+  },
+  {
+    "id": "pv-look-forward-to",
+    "phrase": "look forward to",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "期待；盼望（好事的发生）",
+    "logic": "look（看）+ forward（向前看）+ to（朝向）。满心欢喜地展望未来即将发生的事情。",
+    "tip": "【全网最高频避坑点】这里的 to 是介词，后面绝对不能接动词原形！必须接名词或动名词（-ing）：look forward to hearing from you！",
+    "ex": "I am really looking forward to visiting Edinburgh this autumn.",
+    "exZh": "我非常期待今年秋天能去爱丁堡旅行。"
+  },
+  {
+    "id": "pv-run-into",
+    "phrase": "run into",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "偶遇；不期而遇",
+    "logic": "run（移动前行）+ into（撞见/融入视野）。在路上或公共场所碰巧撞见熟人。",
+    "tip": "同义词为 bump into。非预定会面的巧遇：I ran into Sarah at the train station.",
+    "ex": "Guess who I ran into at the supermarket this morning? Mr. Wilson!",
+    "exZh": "猜猜我今天早上在超市偶遇了谁？威尔逊老师！"
+  },
+  {
+    "id": "pv-get-along-with",
+    "phrase": "get along with",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "与……相处融洽；和睦",
+    "logic": "get along（顺畅同行）+ with（与某人）。在工作或生活中与他人同行合拍、没有摩擦冲突。",
+    "tip": "美式常用 get along with，英式也常说 get on with。",
+    "ex": "She is an easygoing person and gets along with all her roommates.",
+    "exZh": "她是一个随和开朗的人，和所有的室友都相处得非常融洽。"
+  },
+  {
+    "id": "pv-look-after",
+    "phrase": "look after",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "照顾；照看；负责管理",
+    "logic": "look（注视看管）+ after（紧跟在身后）。跟随在孩子或宠物后面确保其安全，即“照顾”。",
+    "tip": "等同于 take care of。常用于托人照顾宠物或老人孩子。",
+    "ex": "Could you look after my cat while I am away on a business trip?",
+    "exZh": "我出差期间你能帮我照看一下我的猫吗？"
+  },
+  {
+    "id": "pv-get-over",
+    "phrase": "get over",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "从（疾病/难过）中康复；迈过坎坷",
+    "logic": "get（移动）+ over（越过高墙/障碍）。跨越生活中的坎坷困难，重新恢复常态。",
+    "tip": "常接疾病或情感挫败：get over a cold（感冒痊愈）/ get over a disappointment。",
+    "ex": "It took him nearly three weeks to completely get over the heavy flu.",
+    "exZh": "他花了将近三周的时间才从这场重感冒中完全康复过来。"
+  },
+  {
+    "id": "pv-catch-up-with",
+    "phrase": "catch up with",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "赶上（进度）；与朋友叙旧聊天",
+    "logic": "catch（抓住）+ up（齐平水平）+ with（与某人）。原本落后，加快脚步赶上同步状态。",
+    "tip": "老朋友久别重逢极常用：Let's have a coffee and catch up!（咱们喝杯咖啡好好叙叙旧吧！）",
+    "ex": "Let's meet for lunch this Friday and catch up on everything.",
+    "exZh": "咱们这周五一起吃午饭，好好叙叙近况吧。"
+  },
+  {
+    "id": "pv-give-away",
+    "phrase": "give away",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "赠送（免费物品）；泄露秘密",
+    "logic": "give（给）+ away（移走脱离）。免费将物品送走，或不小心将藏在心底的信息脱口而出。",
+    "tip": "看电影防剧透专用语：Don't give away the ending!（千万别给我剧透结局！）",
+    "ex": "The local bookstore is giving away free bookmarks to all visitors today.",
+    "exZh": "当地书店今天正在向所有访客免费赠送书签。"
+  },
+  {
+    "id": "pv-piece-of-cake",
+    "phrase": "a piece of cake",
+    "particle": "other",
+    "category": "OTHER 高频结合与习语",
+    "zh": "小菜一碟；轻而易举的事",
+    "logic": "吃一块香甜松软的蛋糕毫不费力。引申为某件事轻而易举，相当于中文里的“张飞吃豆芽，小菜一碟”。",
+    "tip": "高频口语习语：The exam was a piece of cake!（这次考试简直易如反掌！）",
+    "ex": "Don't stress about driving test — with enough practice, it's a piece of cake.",
+    "exZh": "别对驾照考试太焦虑——只要练习充分，绝对是小菜一碟。"
+  }
+],
+  phrasalDrills: [
+  {
+    "id": "pd-1",
+    "prompt": "明天为了赶早班火车，我们必须一早动身【出发】。",
+    "sentence": "We need to ______ early tomorrow morning to catch the first train.",
+    "options": [
+      "set off",
+      "set up",
+      "set out of"
+    ],
+    "answer": 0,
+    "explanation": "set off 意为“动身；启程出发”，常用于开始一段旅程。"
+  },
+  {
+    "id": "pd-2",
+    "prompt": "不管遇到多大困难，绝不要轻易【放弃】。",
+    "sentence": "No matter how tough it gets, you must never ______ your goals.",
+    "options": [
+      "give up on",
+      "give away",
+      "give in to"
+    ],
+    "answer": 0,
+    "explanation": "give up on something 意为“对……放弃希望或努力”。"
+  },
+  {
+    "id": "pd-3",
+    "prompt": "房间里太冷了，能麻烦你把空调温度【调高/调低】或把音乐【调小】一点吗？",
+    "sentence": "Could you please ______ the volume? It's much too loud for studying.",
+    "options": [
+      "turn down",
+      "turn out",
+      "turn off"
+    ],
+    "answer": 0,
+    "explanation": "turn down 表示“调小音量/温度”；turn off 则是彻底关闭电源。"
+  },
+  {
+    "id": "pd-4",
+    "prompt": "我非常【期待】下个月在伦敦见到你。",
+    "sentence": "I am really looking forward to ______ you in London next month.",
+    "options": [
+      "seeing",
+      "see",
+      "saw"
+    ],
+    "answer": 0,
+    "explanation": "look forward to 中的 to 是介词，后面必须接动名词（-ing）：seeing you。"
+  },
+  {
+    "id": "pd-5",
+    "prompt": "我们的打印纸已经【用光了】，能帮我再去买一包吗？",
+    "sentence": "The office has ______ printer paper. Could you pick up some more?",
+    "options": [
+      "run out of",
+      "run into",
+      "run over"
+    ],
+    "answer": 0,
+    "explanation": "run out of 表示“某物资或时间用完、耗尽”。"
+  },
+  {
+    "id": "pd-6",
+    "prompt": "因为通勤时间实在太长，她最终决定【婉拒】这份工作邀请。",
+    "sentence": "She decided to ______ the job offer because the daily commute was too long.",
+    "options": [
+      "turn down",
+      "turn off",
+      "turn back"
+    ],
+    "answer": 0,
+    "explanation": "turn down 除了调低音量，另一个核心引申含义是“拒绝（提议、申请、邀请）”。"
+  }
+]
 };

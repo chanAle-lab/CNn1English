@@ -157,65 +157,217 @@
     fl.appendChild(r);
   });
 
-  /* ---------- Quiz ---------- */
-  var qi = 0, score = 0, answered = false;
-  var Q = D.quiz;
-  var qEl = $("#quiz-q"), oEl = $("#quiz-options"), xEl = $("#quiz-explain"), nEl = $("#quiz-next");
-  function renderQ() {
-    answered = false;
-    var q = Q[qi];
-    $("#quiz-progress").textContent = "第 " + (qi + 1) + " 题 / " + Q.length;
-    $("#quiz-score").textContent = "得分 Score: " + score;
-    $("#quiz-bar").style.width = (qi / Q.length * 100) + "%";
-    qEl.textContent = q.q;
-    oEl.innerHTML = "";
-    xEl.hidden = true; nEl.hidden = true;
-    var order = q.o.map(function (_, i) { return i; });
-    for (var k = order.length - 1; k > 0; k--) { var r = Math.floor(Math.random() * (k + 1)); var t = order[k]; order[k] = order[r]; order[r] = t; }
-    order.forEach(function (i, pos) {
-      var o = q.o[i];
-      var b = el("button", "opt", '<span class="opt-key">' + "ABC"[pos] + "</span>" + esc(o));
-      b.type = "button";
-      b.dataset.idx = i;
-      b.addEventListener("click", function () { choose(i, b); });
-      oEl.appendChild(b);
+  /* ---------- Quiz & Mistake Notebook ---------- */
+  (function quizModule() {
+    var rawQuiz = D.quiz || [];
+    var qEl = $("#quiz-q"), oEl = $("#quiz-options"), xEl = $("#quiz-explain");
+    var nEl = $("#quiz-next"), removeMistakeBtn = $("#quiz-remove-mistake");
+    var progressEl = $("#quiz-progress"), scoreEl = $("#quiz-score"), barEl = $("#quiz-bar");
+    var modeLabelEl = $("#quiz-mode-label"), mistakesCountEl = $("#quiz-mistakes-count");
+    var modeBtns = document.querySelectorAll(".quiz-mode-bar .mode-btn");
+
+    var currentMode = "standard"; // standard | all | mistakes
+    var Q = [];
+    var qi = 0, score = 0, answered = false;
+
+    // Helper: LocalStorage Mistakes Management
+    function getMistakes() {
+      try {
+        var m = localStorage.getItem("cn1_mistakes");
+        return m ? JSON.parse(m) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveMistake(q) {
+      if (!q || !q.q) return;
+      var list = getMistakes();
+      var exists = list.some(function (item) { return item.q === q.q; });
+      if (!exists) {
+        list.push(q);
+        try { localStorage.setItem("cn1_mistakes", JSON.stringify(list)); } catch (e) {}
+      }
+      updateMistakesCount();
+    }
+
+    function removeMistake(questionText) {
+      var list = getMistakes();
+      list = list.filter(function (item) { return item.q !== questionText; });
+      try { localStorage.setItem("cn1_mistakes", JSON.stringify(list)); } catch (e) {}
+      updateMistakesCount();
+    }
+
+    function updateMistakesCount() {
+      var count = getMistakes().length;
+      if (mistakesCountEl) mistakesCountEl.textContent = count;
+    }
+    updateMistakesCount();
+
+    function prepareQuestions(mode) {
+      if (mode === "mistakes") {
+        return getMistakes().slice();
+      }
+      if (mode === "all") {
+        return rawQuiz.slice();
+      }
+      // standard: 10 random questions
+      var pool = rawQuiz.slice();
+      for (var k = pool.length - 1; k > 0; k--) {
+        var r = Math.floor(Math.random() * (k + 1));
+        var temp = pool[k]; pool[k] = pool[r]; pool[r] = temp;
+      }
+      return pool.slice(0, 10);
+    }
+
+    function startQuiz(mode) {
+      currentMode = mode || "standard";
+      modeBtns.forEach(function (b) {
+        b.classList.toggle("active", b.dataset.mode === currentMode);
+      });
+
+      Q = prepareQuestions(currentMode);
+      qi = 0;
+      score = 0;
+
+      if (modeLabelEl) {
+        if (currentMode === "mistakes") modeLabelEl.textContent = "错题复习 Review";
+        else if (currentMode === "all") modeLabelEl.textContent = "全量测验 (36题) All";
+        else modeLabelEl.textContent = "随机 10 题 Random 10";
+      }
+
+      if (currentMode === "mistakes" && Q.length === 0) {
+        renderEmptyMistakes();
+        return;
+      }
+
+      renderQ();
+    }
+
+    function renderEmptyMistakes() {
+      if (progressEl) progressEl.textContent = "错题本空空如也";
+      if (scoreEl) scoreEl.textContent = "";
+      if (barEl) barEl.style.width = "0%";
+      qEl.textContent = "🎉 没有任何错题记录！";
+      oEl.innerHTML = '<div class="quiz-empty-box"><p>太棒了！你的错题本目前是空的。<br>在普通测验中做错的题目会自动记录在这里供你复习。</p></div>';
+      xEl.hidden = true;
+      nEl.hidden = false;
+      nEl.textContent = "开始随机测验 Start Quiz";
+      if (removeMistakeBtn) removeMistakeBtn.hidden = true;
+      qi = -2; // special flag for empty
+    }
+
+    function renderQ() {
+      answered = false;
+      var q = Q[qi];
+      if (!q) return;
+
+      if (progressEl) progressEl.textContent = "第 " + (qi + 1) + " 题 / " + Q.length;
+      if (scoreEl) scoreEl.textContent = "得分 Score: " + score;
+      if (barEl) barEl.style.width = (qi / Q.length * 100) + "%";
+
+      if (currentMode === "mistakes") {
+        qEl.innerHTML = '<span class="quiz-badge-review">错题本复习</span><br>' + esc(q.q);
+      } else {
+        qEl.textContent = q.q;
+      }
+
+      oEl.innerHTML = "";
+      xEl.hidden = true;
+      nEl.hidden = true;
+      if (removeMistakeBtn) removeMistakeBtn.hidden = true;
+
+      // Randomize option display order
+      var order = q.o.map(function (_, i) { return i; });
+      for (var k = order.length - 1; k > 0; k--) {
+        var r = Math.floor(Math.random() * (k + 1));
+        var t = order[k]; order[k] = order[r]; order[r] = t;
+      }
+
+      order.forEach(function (idx, pos) {
+        var optText = q.o[idx];
+        var b = el("button", "opt", '<span class="opt-key">' + "ABC"[pos] + "</span>" + esc(optText));
+        b.type = "button";
+        b.dataset.idx = idx;
+        b.addEventListener("click", function () { choose(idx, b); });
+        oEl.appendChild(b);
+      });
+    }
+
+    function choose(selectedIdx, b) {
+      if (answered) return;
+      answered = true;
+      var q = Q[qi];
+      var btns = oEl.querySelectorAll(".opt");
+      btns.forEach(function (x) {
+        x.disabled = true;
+        if (+x.dataset.idx === q.a) x.classList.add("correct");
+      });
+
+      if (selectedIdx === q.a) {
+        score++;
+        xEl.className = "quiz-explain ok";
+        xEl.innerHTML = "<b>正确 Correct！</b> " + esc(q.x);
+        // If reviewing mistakes, offer one-click removal
+        if (currentMode === "mistakes" && removeMistakeBtn) {
+          removeMistakeBtn.hidden = false;
+          removeMistakeBtn.textContent = "✓ 已掌握，移出错题本 Remove from Mistakes";
+          removeMistakeBtn.onclick = function () {
+            removeMistake(q.q);
+            removeMistakeBtn.textContent = "✓ 已移出错题本 Removed!";
+            removeMistakeBtn.disabled = true;
+          };
+        }
+      } else {
+        b.classList.add("wrong");
+        xEl.className = "quiz-explain no";
+        xEl.innerHTML = "<b>再想想 Not quite.</b> " + esc(q.x);
+        // Automatically save mistake to review notebook
+        saveMistake(q);
+      }
+
+      if (scoreEl) scoreEl.textContent = "得分 Score: " + score;
+      xEl.hidden = false;
+      nEl.hidden = false;
+      nEl.textContent = qi === Q.length - 1 ? "查看结果 See result" : "下一题 Next";
+      nEl.focus({ preventScroll: true });
+    }
+
+    function finish() {
+      if (barEl) barEl.style.width = "100%";
+      if (progressEl) progressEl.textContent = "完成 Done";
+      var pct = score / Q.length;
+      var msg = pct === 1 ? "太棒了！满分。Perfect score! All answers correct!"
+        : pct >= 0.7 ? "很好！继续加油。Great work — you're making steady progress!"
+        : "不错的尝试！错题已收录在错题本中，随时可以针对性巩固复习。";
+      qEl.textContent = "你答对了 " + score + " / " + Q.length + " 题";
+      oEl.innerHTML = '<p class="quiz-final">' + esc(msg) + "</p>";
+      xEl.hidden = true;
+      if (removeMistakeBtn) removeMistakeBtn.hidden = true;
+      nEl.textContent = "再测一次 Try again";
+      nEl.hidden = false;
+      qi = -1;
+    }
+
+    if (nEl) {
+      nEl.addEventListener("click", function () {
+        if (qi === -2) { startQuiz("standard"); return; }
+        if (qi === -1) { startQuiz(currentMode); return; }
+        if (qi === Q.length - 1) { finish(); return; }
+        qi++;
+        renderQ();
+      });
+    }
+
+    modeBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var mode = btn.dataset.mode;
+        startQuiz(mode);
+      });
     });
-  }
-  function choose(i, b) {
-    if (answered) return;
-    answered = true;
-    var q = Q[qi];
-    var btns = oEl.querySelectorAll(".opt");
-    btns.forEach(function (x) {
-      x.disabled = true;
-      if (+x.dataset.idx === q.a) x.classList.add("correct");
-    });
-    if (i === q.a) { score++; xEl.className = "quiz-explain ok"; xEl.innerHTML = "<b>正确 Correct！</b> " + esc(q.x); }
-    else { b.classList.add("wrong"); xEl.className = "quiz-explain no"; xEl.innerHTML = "<b>再想想 Not quite.</b> " + esc(q.x); }
-    $("#quiz-score").textContent = "得分 Score: " + score;
-    xEl.hidden = false;
-    nEl.hidden = false;
-    nEl.textContent = qi === Q.length - 1 ? "查看结果 See result" : "下一题 Next";
-    nEl.focus({ preventScroll: true });
-  }
-  function finish() {
-    $("#quiz-bar").style.width = "100%";
-    $("#quiz-progress").textContent = "完成 Done";
-    var pct = score / Q.length;
-    var msg = pct === 1 ? "太棒了！满分。Perfect score!" : pct >= 0.7 ? "很好！继续加油。Great work — keep going!" : "不错的开始，再复习一下上面的内容吧。A good start — review the sections above and try again.";
-    qEl.textContent = "你答对了 " + score + " / " + Q.length + " 题";
-    oEl.innerHTML = '<p class="quiz-final">' + esc(msg) + "</p>";
-    xEl.hidden = true;
-    nEl.textContent = "再做一次 Try again";
-    nEl.hidden = false;
-    qi = -1;
-  }
-  nEl.addEventListener("click", function () {
-    if (qi === -1) { qi = 0; score = 0; renderQ(); return; }
-    if (qi === Q.length - 1) { finish(); return; }
-    qi++; renderQ();
-  });
-  renderQ();
+
+    startQuiz("standard");
+  })();
 
   /* ---------- Vocabulary (A1 & A2) ---------- */
   (function vocab() {
@@ -810,6 +962,170 @@
     }
 
     renderNav();
+    renderDrill();
+  })();
+
+  /* ---------- Phrasal Verbs & Idioms Module ---------- */
+  (function phrasalVerbsModule() {
+    var pvs = L.phrasalVerbs || [];
+    var drills = L.phrasalDrills || [];
+    if (!pvs.length) return;
+
+    var tabsEl = $("#phv-tabs");
+    var searchEl = $("#phv-search");
+    var gridEl = $("#phv-grid");
+    var drillBodyEl = $("#phv-drill-body");
+    var drillNextBtn = $("#phv-drill-next");
+
+    var currentParticle = "all";
+    var query = "";
+
+    var categories = [
+      { id: "all", label: "全部 All (" + pvs.length + ")" },
+      { id: "up", label: "UP 彻底/向上" },
+      { id: "off", label: "OFF 离开/分离" },
+      { id: "out", label: "OUT 探究/耗尽" },
+      { id: "down", label: "DOWN 降低/减缓" },
+      { id: "other", label: "OTHER 常用搭配/习语" }
+    ];
+
+    function renderTabs() {
+      if (!tabsEl) return;
+      tabsEl.innerHTML = "";
+      categories.forEach(function (cat) {
+        var b = el("button", "tab-btn" + (cat.id === currentParticle ? " active" : ""));
+        b.type = "button";
+        b.textContent = cat.label;
+        b.addEventListener("click", function () {
+          currentParticle = cat.id;
+          renderTabs();
+          renderCards();
+        });
+        tabsEl.appendChild(b);
+      });
+    }
+
+    function renderCards() {
+      if (!gridEl) return;
+      gridEl.innerHTML = "";
+      var filtered = pvs.filter(function (item) {
+        var matchParticle = currentParticle === "all" || item.particle === currentParticle;
+        if (!matchParticle) return false;
+        if (!query) return true;
+        var q = query.toLowerCase();
+        return item.phrase.toLowerCase().indexOf(q) !== -1 ||
+          item.zh.indexOf(q) !== -1 ||
+          item.ex.toLowerCase().indexOf(q) !== -1;
+      });
+
+      if (!filtered.length) {
+        gridEl.innerHTML = '<p class="drill-empty" style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 30px;">没有找到匹配的短语 No matching phrases found.</p>';
+        return;
+      }
+
+      filtered.forEach(function (item) {
+        var card = el("article", "phv-card");
+        var top = el("div", "phv-card-top");
+        var phraseEl = el("h3", "phv-phrase", esc(item.phrase));
+        var tagEl = el("span", "phv-tag " + item.particle, esc(item.category));
+        top.appendChild(phraseEl);
+        top.appendChild(tagEl);
+
+        var zhEl = el("p", "phv-zh", esc(item.zh));
+        var logicEl = el("div", "phv-logic", "<b>💡 隐喻逻辑：</b>" + esc(item.logic));
+        var tipEl = el("div", "phv-tip", "<b>⚠️ 搭配要点：</b>" + esc(item.tip));
+
+        var exBox = el("div", "phv-ex-box");
+        var exRow = el("div", "phv-ex-en-row");
+        var exEn = el("p", "phv-ex-en", esc(item.ex));
+        var speakBtn = el("button", "phv-speak-btn");
+        speakBtn.type = "button";
+        speakBtn.setAttribute("aria-label", "Listen to " + item.phrase);
+        speakBtn.innerHTML = ICON;
+        speakBtn.addEventListener("click", function () {
+          speak(item.phrase + ". " + item.ex);
+        });
+
+        exRow.appendChild(exEn);
+        exRow.appendChild(speakBtn);
+
+        var exZh = el("p", "phv-ex-zh", esc(item.exZh));
+        exBox.appendChild(exRow);
+        exBox.appendChild(exZh);
+
+        card.appendChild(top);
+        card.appendChild(zhEl);
+        card.appendChild(logicEl);
+        card.appendChild(tipEl);
+        card.appendChild(exBox);
+
+        gridEl.appendChild(card);
+      });
+    }
+
+    if (searchEl) {
+      searchEl.addEventListener("input", function () {
+        query = searchEl.value.trim();
+        renderCards();
+      });
+    }
+
+    // Mini Drill Logic
+    var drillIdx = 0;
+    function renderDrill() {
+      if (!drillBodyEl || !drills.length) return;
+      var d = drills[drillIdx];
+      if (!d) return;
+
+      drillBodyEl.innerHTML = "";
+      var card = el("div", "phv-drill-card");
+      var prompt = el("p", "phv-drill-prompt", "提示：" + esc(d.prompt));
+      var sentence = el("p", "phv-drill-sentence", esc(d.sentence).replace("______", "<u>______</u>"));
+      var optsGrid = el("div", "phv-drill-opts");
+      var feedback = el("div", "phv-drill-feedback");
+      feedback.hidden = true;
+
+      var answered = false;
+      d.options.forEach(function (opt, idx) {
+        var b = el("button", "phv-opt-btn", esc(opt));
+        b.type = "button";
+        b.addEventListener("click", function () {
+          if (answered) return;
+          answered = true;
+          optsGrid.querySelectorAll(".phv-opt-btn").forEach(function (btn, i) {
+            btn.disabled = true;
+            if (i === d.answer) btn.classList.add("correct");
+          });
+
+          if (idx === d.answer) {
+            feedback.className = "phv-drill-feedback ok";
+            feedback.innerHTML = "<b>正确 Correct！</b> " + esc(d.explanation);
+          } else {
+            b.classList.add("wrong");
+            feedback.className = "phv-drill-feedback no";
+            feedback.innerHTML = "<b>答案是 " + esc(d.options[d.answer]) + "。</b> " + esc(d.explanation);
+          }
+          feedback.hidden = false;
+        });
+        optsGrid.appendChild(b);
+      });
+
+      card.appendChild(prompt);
+      card.appendChild(sentence);
+      card.appendChild(optsGrid);
+      card.appendChild(feedback);
+      drillBodyEl.appendChild(card);
+    }
+
+    if (drillNextBtn) {
+      drillNextBtn.addEventListener("click", function () {
+        drillIdx = (drillIdx + 1) % drills.length;
+        renderDrill();
+      });
+    }
+
+    renderTabs();
+    renderCards();
     renderDrill();
   })();
 })();
