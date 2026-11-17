@@ -174,7 +174,7 @@ body {
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
-button { font: inherit; color: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: transparent; }
 h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 700; }
 p { margin: 0; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
@@ -289,14 +289,37 @@ p { margin: 0; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 13px 22px; border-radius: 999px; font-weight: 600; font-size: var(--text-sm);
-  text-decoration: none; border: 1px solid transparent; transition: transform .2s var(--ease), background .2s, border-color .2s;
+  padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: var(--text-sm);
+  text-decoration: none; border: 1px solid transparent; transition: transform .2s var(--ease), background .2s, border-color .2s, color .2s;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  user-select: none;
 }
 .btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--red); color: #fff; }
-.btn-primary:hover { background: var(--red-deep); }
-.btn-ghost { border-color: var(--ink); }
-.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.btn-primary { background: var(--red); color: #fff !important; border-color: var(--red); }
+.btn-primary:hover { background: var(--red-deep); border-color: var(--red-deep); color: #fff !important; }
+.btn-ghost {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.btn-ghost:hover {
+  background: var(--card);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+[data-theme="dark"] .btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--ink);
+}
+[data-theme="dark"] .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
 
 .hero-card {
   background: var(--card); border: 1px solid var(--line); border-radius: 20px;
@@ -2973,4 +2996,86 @@ p { margin: 0; }
   .studio-preview-pane {
     order: 1;
   }
+}
+
+
+/* Teacher Hub Dark Mode Adjustments */
+[data-theme="dark"] .worksheet-card {
+  background: var(--card);
+  border-color: var(--line);
+}
+[data-theme="dark"] .worksheet-card.active-card {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(226, 91, 82, 0.35);
+}
+[data-theme="dark"] .card-actions .btn-ghost,
+[data-theme="dark"] .panel-box .btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--ink);
+}
+[data-theme="dark"] .card-actions .btn-ghost:hover,
+[data-theme="dark"] .panel-box .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+[data-theme="dark"] .level-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+}
+[data-theme="dark"] .level-btn:hover {
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+[data-theme="dark"] .level-btn.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+[data-theme="dark"] .category-pill {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+[data-theme="dark"] .category-pill:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+[data-theme="dark"] .category-pill.active {
+  background: var(--red);
+  color: #ffffff;
+  border-color: var(--red);
+}
+[data-theme="dark"] .search-box input {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--ink);
+}
+[data-theme="dark"] .nav-btn-back,
+[data-theme="dark"] .nav-btn-studio {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+}
+[data-theme="dark"] .nav-btn-back:hover,
+[data-theme="dark"] .nav-btn-studio:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+[data-theme="dark"] .nav-btn-teachers {
+  background: rgba(226, 91, 82, 0.15);
+  border-color: rgba(226, 91, 82, 0.3);
+  color: var(--red);
+}
+[data-theme="dark"] .nav-btn-teachers:hover {
+  background: var(--red);
+  color: #ffffff;
+}
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea {
+  background: var(--paper-2);
+  border-color: var(--line);
+  color: var(--ink);
 }
