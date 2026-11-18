@@ -794,6 +794,9 @@ p { margin: 0; }
 .site-footer { border-top: 1px solid var(--line); padding: 40px 0 48px; }
 .footer-inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
 .foot-note { margin-top: 12px; font-size: var(--text-sm); color: var(--muted); }
+.foot-contact { margin-top: 8px; font-size: var(--text-sm); color: var(--muted); }
+.foot-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); font-weight: 500; transition: color .2s, border-color .2s; }
+.foot-contact a:hover { color: var(--red); border-color: var(--red); }
 .foot-links { display: flex; gap: 20px; font-size: var(--text-sm); }
 .foot-links a { text-decoration: none; border-bottom: 1px solid var(--line); }
 .foot-links a:hover { border-color: var(--red); color: var(--red); }
