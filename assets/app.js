@@ -108,17 +108,22 @@
   }
 
   /* ---------- Word of the day ---------- */
-  var day = Math.floor(Date.now() / 86400000);
-  var w = D.words[day % D.words.length];
-  $("#wotd-word").textContent = w.w;
-  $("#wotd-ipa").textContent = w.ipa;
-  $("#wotd-zh").textContent = w.zh;
-  $("#wotd-ex").textContent = "“" + w.ex + "”";
-  $("#wotd-speak").addEventListener("click", function () { speak(w.w + ". " + w.ex); });
+  var wotdWord = $("#wotd-word");
+  if (wotdWord) {
+    var day = Math.floor(Date.now() / 86400000);
+    var w = D.words[day % D.words.length];
+    wotdWord.textContent = w.w;
+    if ($("#wotd-ipa")) $("#wotd-ipa").textContent = w.ipa;
+    if ($("#wotd-zh")) $("#wotd-zh").textContent = w.zh;
+    if ($("#wotd-ex")) $("#wotd-ex").textContent = "“" + w.ex + "”";
+    var wotdBtn = $("#wotd-speak");
+    if (wotdBtn) wotdBtn.addEventListener("click", function () { speak(w.w + ". " + w.ex); });
+  }
 
   /* ---------- Sounds ---------- */
   var grid = $("#sound-grid");
-  D.sounds.forEach(function (s) {
+  if (grid) {
+    D.sounds.forEach(function (s) {
     var c = el("article", "sound");
     var pairs = s.pairs.map(function (p) {
       return '<li><button type="button" class="word" data-say="' + esc(p[0]) + '">' + esc(p[0]) +
@@ -139,9 +144,11 @@
     t.classList.add("ping");
     setTimeout(function () { t.classList.remove("ping"); }, 400);
   });
+  }
 
   /* ---------- Phrase cards ---------- */
   var tabs = $("#phrase-tabs"), cards = $("#phrase-cards");
+  if (tabs && cards) {
   var cats = Object.keys(D.phrases);
   function renderCards(cat) {
     cards.innerHTML = "";
@@ -172,9 +179,11 @@
     tabs.appendChild(b);
   });
   renderCards(cats[0]);
+  }
 
   /* ---------- Grammar ---------- */
   var gl = $("#grammar-list");
+  if (gl) {
   D.grammar.forEach(function (g, i) {
     var d = el("details", "g-item");
     if (i === 0) d.open = true;
@@ -187,9 +196,11 @@
       ' <button type="button" class="speak mini" data-say="' + esc(g.right) + '" aria-label="Listen">' + ICON + "</button></p></div></div>";
     gl.appendChild(d);
   });
+  }
 
   /* ---------- Fixes ---------- */
   var fl = $("#fix-list");
+  if (fl) {
   D.fixes.forEach(function (f) {
     var r = el("div", "fix");
     r.innerHTML =
@@ -199,11 +210,13 @@
       '<p class="fix-why">' + esc(f[2]) + "</p>";
     fl.appendChild(r);
   });
+  }
 
   /* ---------- Quiz & Mistake Notebook ---------- */
   (function quizModule() {
     var rawQuiz = D.quiz || [];
     var qEl = $("#quiz-q"), oEl = $("#quiz-options"), xEl = $("#quiz-explain");
+    if (!qEl || !oEl) return;
     var nEl = $("#quiz-next"), removeMistakeBtn = $("#quiz-remove-mistake");
     var progressEl = $("#quiz-progress"), scoreEl = $("#quiz-score"), barEl = $("#quiz-bar");
     var modeLabelEl = $("#quiz-mode-label"), mistakesCountEl = $("#quiz-mistakes-count");
@@ -414,6 +427,8 @@
 
   /* ---------- Vocabulary (A1 & A2) ---------- */
   (function vocab() {
+    var grid = $("#vocab-grid");
+    if (!grid) return;
     var rawA1 = window.CN1_A1 || [];
     var rawA2 = window.CN1_A2 || [];
     if (!rawA1.length && !rawA2.length) return;
@@ -633,6 +648,8 @@
 
   /* ---------- Dialogues Module ---------- */
   (function dialoguesModule() {
+    var tabsEl = $("#dialogue-tabs");
+    if (!tabsEl) return;
     var list = (L.dialogues || []);
     if (!list.length) return;
     var currentIdx = 0;
@@ -762,6 +779,8 @@
 
   /* ---------- Reading Comprehension Module ---------- */
   (function readingModule() {
+    var tabsEl = $("#reading-tabs");
+    if (!tabsEl) return;
     var passages = (L.readings || []);
     if (!passages.length) return;
     var currentIdx = 0;
@@ -924,6 +943,8 @@
 
   /* ---------- Listening Drills Module ---------- */
   (function listeningModule() {
+    var navEl = $("#listening-nav");
+    if (!navEl) return;
     var drills = (L.listening || []);
     if (!drills.length) return;
     var currentIdx = 0;
@@ -1010,6 +1031,8 @@
 
   /* ---------- Phrasal Verbs & Idioms Module ---------- */
   (function phrasalVerbsModule() {
+    var tabsEl = $("#phv-tabs");
+    if (!tabsEl) return;
     var pvs = L.phrasalVerbs || [];
     var drills = L.phrasalDrills || [];
     if (!pvs.length) return;

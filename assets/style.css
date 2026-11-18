@@ -260,6 +260,14 @@ p { margin: 0; }
   color: var(--ink);
   border-color: var(--ink);
 }
+.nav a.active {
+  background: var(--red);
+  color: #fff !important;
+  border-color: var(--red);
+}
+.nav a.active span {
+  color: rgba(255, 255, 255, 0.9);
+}
 [data-theme="dark"] .nav a {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.1);
@@ -269,6 +277,14 @@ p { margin: 0; }
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.25);
   color: var(--ink);
+}
+[data-theme="dark"] .nav a.active {
+  background: var(--red);
+  color: #fff !important;
+  border-color: var(--red);
+}
+[data-theme="dark"] .nav a.active span {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Hero */
@@ -3081,4 +3097,148 @@ p { margin: 0; }
   background: var(--paper-2);
   border-color: var(--line);
   color: var(--ink);
+}
+
+
+/* ==========================================================================
+   Multi-Page Navigation & Learning Hub Styles
+   ========================================================================== */
+.page-breadcrumb {
+  padding: 18px 0 10px;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-breadcrumb a {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color .15s;
+}
+.page-breadcrumb a:hover {
+  color: var(--red);
+}
+.page-breadcrumb .sep {
+  opacity: 0.4;
+}
+.page-breadcrumb .cur-page {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.section-hub {
+  padding-top: 20px;
+}
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.hub-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s var(--ease), border-color .2s, box-shadow .2s;
+}
+.hub-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--ink-2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+.hub-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.hub-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--red);
+}
+.hub-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-weight: 600;
+}
+.hub-title {
+  font-size: 1.25rem;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.hub-title .hub-en {
+  font-size: var(--text-sm);
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.hub-desc {
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+.hub-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-weight: 500;
+}
+.hub-arrow {
+  color: var(--red);
+  font-weight: 600;
+  transition: transform .2s var(--ease);
+}
+.hub-card:hover .hub-arrow {
+  transform: translateX(3px);
+}
+
+.hub-card-teacher {
+  border-color: rgba(184, 50, 42, 0.3);
+  background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--red) 5%, var(--card)) 100%);
+}
+.hub-card-teacher:hover {
+  border-color: var(--red);
+}
+.hub-badge-teacher {
+  background: rgba(184, 50, 42, 0.12);
+  border-color: rgba(184, 50, 42, 0.3);
+  color: var(--red);
+}
+
+[data-theme="dark"] .hub-card {
+  background: var(--card);
+  border-color: var(--line);
+}
+[data-theme="dark"] .hub-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+[data-theme="dark"] .hub-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+}
+[data-theme="dark"] .hub-card-teacher {
+  border-color: rgba(226, 91, 82, 0.35);
+  background: linear-gradient(135deg, var(--card) 0%, rgba(226, 91, 82, 0.1) 100%);
 }

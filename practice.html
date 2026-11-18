@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>综合测验与错题本 · Practice Quiz & Mistakes Notebook | CNn1English</title>
+  <meta name="description" content="A teaching and studying resource for Mandarin speakers to learn English. 为中文母语者设计的英语学习资源。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23b8322a'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23fff' font-family='serif'%3E英%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Edu+SA+Beginner:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem("cn1_theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "dark" || (!saved && prefersDark)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content · 跳到正文</a>
+  <header class="site-header" id="top">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="CNn1English home">
+        <span class="seal" aria-hidden="true">英</span>
+        <span class="brand-name">CNn1English</span>
+      </a>
+      <div class="header-actions">
+        <a href="teachers.html" class="nav-btn-teachers" title="Worksheet Generator for Teachers">
+          <span class="badge-tag">Teachers</span> 教师备课专区
+        </a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">首页 <span>Home</span></a>
+      <a href="sounds.html">发音 <span>Sounds</span></a>
+      <a href="writing.html">书写 <span>Writing</span></a>
+      <a href="vocab.html">词汇 <span>Words</span></a>
+      <a href="dialogues.html">对话 <span>Dialogues</span></a>
+      <a href="reading.html">阅读 <span>Reading</span></a>
+      <a href="listening.html">听力 <span>Listening</span></a>
+      <a href="phrases.html">短语 <span>Phrases</span></a>
+      <a href="phrasal-verbs.html">动词短语 <span>Phrasal</span></a>
+      <a href="grammar.html">语法 <span>Grammar</span></a>
+      <a href="mistakes.html">纠错 <span>Fixes</span></a>
+      <a href="practice.html" class="active">练习 <span>Practice</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="page-breadcrumb wrap">
+      <a href="index.html">← 首页 Home</a> <span class="sep">/</span> <span class="cur-page">综合测验与错题本 · Practice Quiz & Mistakes Notebook</span>
+    </div>
+<!-- PRACTICE -->
+    <section class="section" id="practice">
+      <div class="wrap narrow">
+        <header class="section-head">
+          <p class="section-num">11</p>
+          <div>
+            <h2>测验练习与错题本 <span class="h-en">Quiz &amp; Review Notebook</span></h2>
+            <p class="section-intro">涵盖语法、时态、发音、中式英语避坑与动词短语。做错的题目会自动收入“错题本”，方便针对性复习巩固。<br><span class="en-note">Comprehensive 36-question test bank with automatic mistake tracking. Review missed questions anytime until full mastery.</span></p>
+          </div>
+        </header>
+
+        <div class="quiz-mode-bar" role="tablist" aria-label="Quiz modes">
+          <button type="button" class="mode-btn active" data-mode="standard">🎲 随机 10 题 Random 10</button>
+          <button type="button" class="mode-btn" data-mode="all">📚 完整题库 All (36)</button>
+          <button type="button" class="mode-btn" data-mode="mistakes" id="quiz-mistakes-tab">✍️ 错题本 Review Mistakes <span class="count-badge" id="quiz-mistakes-count">0</span></button>
+        </div>
+
+        <div class="quiz" id="quiz">
+          <div class="quiz-top">
+            <span id="quiz-progress">第 1 题 / 10</span>
+            <span id="quiz-mode-label" class="quiz-mode-label">随机测试 Random</span>
+            <span id="quiz-score">得分 Score: 0</span>
+          </div>
+          <div class="quiz-bar"><span id="quiz-bar"></span></div>
+          <p class="quiz-q" id="quiz-q"></p>
+          <div class="quiz-options" id="quiz-options"></div>
+          <p class="quiz-explain" id="quiz-explain" hidden></p>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" id="quiz-next" type="button" hidden>下一题 Next</button>
+            <button class="btn btn-ghost btn-sm" id="quiz-remove-mistake" type="button" hidden>已掌握，移出错题本 Remove from Mistakes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="brand"><span class="seal" aria-hidden="true">英</span><span class="brand-name">CNn1English</span></p>
+        <p class="foot-note">一个为中文母语者设计的免费英语学习资源。<br>A free teaching and studying resource for Mandarin speakers learning English.</p>
+        <p class="foot-contact">Contact / 咨询建议：<a href="mailto:chang8alex8@gmail.com">chang8alex8@gmail.com</a></p>
+      </div>
+      <p class="foot-links">
+        <a href="mailto:chang8alex8@gmail.com">Contact · 邮箱联系</a>
+        <button type="button" class="theme-toggle" id="footer-theme-toggle" aria-label="Toggle dark mode">
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span class="theme-toggle-text">Dark</span>
+        </button>
+        <a href="teachers.html">教师备课 Worksheets</a>
+        <a href="https://github.com/chanAle-lab/CNn1English.github.io-">GitHub</a>
+        <a href="#top">回到顶部 Back to top ↑</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/vocab-a1.js"></script>
+  <script src="assets/vocab-a2.js"></script>
+  <script src="assets/lessons.js"></script>
+  <script src="assets/writing.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
